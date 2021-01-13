@@ -1,6 +1,6 @@
 {
-  "name": "@qingbing/element-demo",
-  "version": "1.0.0",
+  "name": "@qingbing/element-form",
+  "version": "1.0.1",
   "description": "封装 vue-element-ui 的表单组件",
   "main": "src/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "keywords": [
     "vue",
     "element-ui",
-    "demo"
+    "form"
   ],
   "author": "https://github.com/qingbing",
   "license": "ISC",

@@ -1,5 +1,5 @@
 <template>
-  <div>vue component template view</div>
+  <div>vue component element-form view</div>
 </template>
 
 <script>
