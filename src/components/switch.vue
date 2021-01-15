@@ -15,7 +15,7 @@
 <script>
 // 导入
 import Base from "./base";
-import { isUndefined, isArray, isObject } from "@qingbing/helper";
+import { isArray, isObject } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,

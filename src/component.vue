@@ -39,6 +39,19 @@
           :field="item.field"
         ></component-radio>
       </template>
+      <!-- input_checkbox -->
+      <template v-if="item.input_type == 'checkbox'">
+        <component-checkbox
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :viewFields="viewFields"
+          :item="item"
+          :formData="formData"
+          :field="item.field"
+        ></component-checkbox>
+      </template>
       <!-- switch -->
       <template v-if="item.input_type == 'switch'">
         <component-switch
@@ -67,6 +80,7 @@ import { uniqid } from "@qingbing/helper";
 import ComponentText from "./components/text";
 import ComponentInput from "./components/input";
 import ComponentRadio from "./components/radio";
+import ComponentCheckbox from "./components/checkbox";
 import ComponentSwitch from "./components/switch";
 /**
  * ajax 的函数在 use 后面自定义
@@ -122,6 +136,7 @@ export default {
     ComponentInput,
     ComponentRadio,
     ComponentSwitch,
+    ComponentCheckbox,
   },
   methods: {},
 };
