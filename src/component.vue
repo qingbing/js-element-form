@@ -14,8 +14,8 @@
         ></component-text>
       </template>
       <!-- input_text -->
-      <template v-if="item.input_type == 'input_text'">
-        <component-input-text
+      <template v-if="item.input_type == 'input'">
+        <component-input
           :key="'' + uniqid + index"
           :isForm="isForm"
           :uniqid="'' + uniqid + index"
@@ -24,11 +24,11 @@
           :item="item"
           :formData="formData"
           :field="item.field"
-        ></component-input-text>
+        ></component-input>
       </template>
       <!-- input_radio -->
-      <template v-if="item.input_type == 'input_radio'">
-        <component-input-radio
+      <template v-if="item.input_type == 'radio'">
+        <component-radio
           :key="'' + uniqid + index"
           :isForm="isForm"
           :uniqid="'' + uniqid + index"
@@ -37,8 +37,22 @@
           :item="item"
           :formData="formData"
           :field="item.field"
-        ></component-input-radio>
+        ></component-radio>
       </template>
+      <!-- switch -->
+      <template v-if="item.input_type == 'switch'">
+        <component-switch
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :viewFields="viewFields"
+          :item="item"
+          :formData="formData"
+          :field="item.field"
+        ></component-switch>
+      </template>
+
     </template>
 
     <h1>
@@ -51,8 +65,9 @@
 <script>
 import { uniqid } from "@qingbing/helper";
 import ComponentText from "./components/text";
-import ComponentInputText from "./components/input-text";
-import ComponentInputRadio from "./components/input-radio";
+import ComponentInput from "./components/input";
+import ComponentRadio from "./components/radio";
+import ComponentSwitch from "./components/switch";
 /**
  * ajax 的函数在 use 后面自定义
  * 自定义一些验证规则
@@ -104,8 +119,9 @@ export default {
   },
   components: {
     ComponentText,
-    ComponentInputText,
-    ComponentInputRadio,
+    ComponentInput,
+    ComponentRadio,
+    ComponentSwitch,
   },
   methods: {},
 };
