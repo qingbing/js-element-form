@@ -12,7 +12,7 @@
   <!-- 表单组件 -->
   <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
     <el-radio-group v-model="formData[field]">
-      <template v-for="(val, key) in item.options">
+      <template v-for="(val, key) in item.exts.options">
         <el-radio :label="key" :key="uniqid + key" :disabled="isText" border>
           {{ val }}
         </el-radio>
@@ -29,7 +29,7 @@ import { col_value } from "@qingbing/helper";
 export default {
   extends: Base,
   created() {
-    this.viewText = col_value(this.formData[this.field], this.item.options, "");
+    this.viewText = col_value(this.formData[this.field], this.item.exts.options, "");
   },
 };
 </script>

@@ -12,6 +12,7 @@
   <!-- 表单组件 -->
   <el-form-item v-else :label="item.label" :key="uniqid">
     <el-input
+      clearable
       v-model="formData[field]"
       :placeholder="item.placeholder"
     ></el-input>
@@ -26,8 +27,11 @@ import { isUndefined, sprintf } from "@qingbing/helper";
 export default {
   extends: Base,
   created() {
-    if (!isUndefined[this.item.placeholder]) {
+    const placeholder = this.getExtData("placeholder");
+    if (isUndefined[placeholder]) {
       this.item.placeholder = sprintf("请输入 %s", this.item.label);
+    } else {
+      this.item.placeholder = placeholder;
     }
   },
 };

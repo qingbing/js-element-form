@@ -20,7 +20,7 @@
 
 <script>
 // 导入
-import { inArray } from "@qingbing/helper";
+import { inArray, isUndefined } from "@qingbing/helper";
 // 导出
 export default {
   props: {
@@ -79,7 +79,20 @@ export default {
       isText: true,
     };
   },
-  methods: {},
+  methods: {
+    /**
+     * 获取扩展数据中的字段信息
+     */
+    getExtData(field, defaultVal) {
+      if (isUndefined(this.item.exts)) {
+        return defaultVal;
+      }
+      if (isUndefined(this.item.exts[field])) {
+        return defaultVal;
+      }
+      return this.item.exts[field];
+    },
+  },
 };
 </script>
 

@@ -12,7 +12,7 @@
   <!-- 表单组件 -->
   <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
     <el-checkbox-group v-model="formData[field]">
-      <template v-for="(val, key) in item.options">
+      <template v-for="(val, key) in item.exts.options">
         <el-checkbox :label="key" :key="uniqid + key" border>{{
           val
         }}</el-checkbox>
@@ -37,7 +37,7 @@ export default {
         return;
       }
       const ts = [];
-      const options = this.item.options;
+      const options = this.item.exts.options;
       for (const i in selected) {
         if (options[selected[i]]) {
           ts.push(options[selected[i]]);
