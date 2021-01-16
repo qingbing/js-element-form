@@ -1,8 +1,19 @@
 <template>
-  <el-form-item :label="item.label" :key="uniqid" class="text-left">
+  <!-- 表单显示 -->
+  <el-form-item
+    v-if="type == 'text'"
+    :label="item.label"
+    :key="uniqid"
+    :style="{ textAlign: labelAlgin }"
+  >
+    {{ viewText }}
+  </el-form-item>
+
+  <!-- 表单组件 -->
+  <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
     <el-switch
       v-model="formData[field]"
-      :disabled="isText"
+      :disabled="type == 'view'"
       :activeText="activeText"
       :activeValue="activeValue"
       :inactiveText="inactiveText"
@@ -20,6 +31,7 @@ import { isArray, isObject } from "@qingbing/helper";
 export default {
   extends: Base,
   created() {
+    // 计算 activeText、inactiveText、activeValue、inactiveValue
     this.activeText = "";
     this.inactiveText = "";
     if (isArray(this.item.options)) {
@@ -34,6 +46,19 @@ export default {
     } else {
       this.activeValue = "1";
       this.inactiveValue = "0";
+    }
+    // 计算 type、 viewText
+    if (!this.isText) {
+      this.type = "form";
+    } else if (this.activeText && this.inactiveText) {
+      this.type = "text";
+      if ((this.formData[this.field], this.activeValue)) {
+        this.viewText = this.activeText;
+      } else {
+        this.viewText = this.inactiveText;
+      }
+    } else {
+      this.type = "view";
     }
   },
 };
