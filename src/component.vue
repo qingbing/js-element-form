@@ -65,7 +65,19 @@
           :field="item.field"
         ></component-switch>
       </template>
-
+      <!-- number -->
+      <template v-if="item.input_type == 'number'">
+        <component-number
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :viewFields="viewFields"
+          :item="item"
+          :formData="formData"
+          :field="item.field"
+        ></component-number>
+      </template>
     </template>
 
     <h1>
@@ -82,6 +94,7 @@ import ComponentInput from "./components/input";
 import ComponentRadio from "./components/radio";
 import ComponentCheckbox from "./components/checkbox";
 import ComponentSwitch from "./components/switch";
+import ComponentNumber from "./components/number";
 /**
  * ajax 的函数在 use 后面自定义
  * 自定义一些验证规则
@@ -137,6 +150,7 @@ export default {
     ComponentRadio,
     ComponentSwitch,
     ComponentCheckbox,
+    ComponentNumber,
   },
   methods: {},
 };

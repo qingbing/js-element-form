@@ -11,7 +11,7 @@
 
   <!-- 表单组件 -->
   <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
-    <el-checkbox-group v-model="formData[field]">
+    <el-checkbox-group v-model="formData[field]" :min="min" :max="max">
       <template v-for="(val, key) in item.exts.options">
         <el-checkbox :label="key" :key="uniqid + key" border>{{
           val
@@ -30,12 +30,11 @@ import { isArray } from "@qingbing/helper";
 export default {
   extends: Base,
   created() {
+    if (!isArray(this.formData[this.field])) {
+      this.formData[this.field] = [];
+    }
     if (this.isText) {
       const selected = this.formData[this.field];
-      if (!isArray(selected)) {
-        this.viewText = "";
-        return;
-      }
       const ts = [];
       const options = this.item.exts.options;
       for (const i in selected) {
@@ -44,6 +43,9 @@ export default {
         }
       }
       this.viewText = ts.join(",");
+    } else {
+      this.min = this.getExtData("min", null);
+      this.max = this.getExtData("max", null);
     }
   },
 };
