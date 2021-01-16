@@ -35,8 +35,8 @@ export default {
     }
     if (this.isText) {
       const selected = this.formData[this.field];
-      const ts = [];
       const options = this.item.exts.options;
+      const ts = [];
       for (const i in selected) {
         if (options[selected[i]]) {
           ts.push(options[selected[i]]);
