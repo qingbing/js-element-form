@@ -118,6 +118,19 @@
             :field="item.field"
           ></component-slider>
         </template>
+        <!-- cascader -->
+        <template v-if="item.input_type == 'time-picker'">
+          <component-time-picker
+            :key="'' + uniqid + index"
+            :isForm="isForm"
+            :uniqid="'' + uniqid + index"
+            :labelAlgin="labelAlgin"
+            :viewFields="viewFields"
+            :item="item"
+            :formData="formData"
+            :field="item.field"
+          ></component-time-picker>
+        </template>
         <!-- END : v-if="ignoreFields[item.field]" - end -->
       </template>
       <!-- END : v-for="(item, index) in items" -->
@@ -141,6 +154,7 @@ import ComponentNumber from "./components/number";
 import ComponentSelect from "./components/select";
 import ComponentCascader from "./components/cascader";
 import ComponentSlider from "./components/slider";
+import ComponentTimePicker from "./components/time-picker";
 
 /**
  * ajax 的函数在 use 后面自定义
@@ -208,6 +222,7 @@ export default {
     ComponentSelect,
     ComponentCascader,
     ComponentSlider,
+    ComponentTimePicker,
   },
   methods: {
     inArray(v, arr) {
