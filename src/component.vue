@@ -1,139 +1,137 @@
 <template>
   <div>
-    <template v-for="(item, index) in items">
-      <template v-if="!inArray(item.field, ignoreFields)">
-        <!-- text -->
-        <template v-if="item.input_type == 'text'">
-          <component-text
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-text>
-        </template>
-        <!-- input_text -->
-        <template v-if="item.input_type == 'input'">
-          <component-input
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :viewFields="viewFields"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-input>
-        </template>
-        <!-- input_radio -->
-        <template v-if="item.input_type == 'radio'">
-          <component-radio
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :viewFields="viewFields"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-radio>
-        </template>
-        <!-- input_checkbox -->
-        <template v-if="item.input_type == 'checkbox'">
-          <component-checkbox
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :viewFields="viewFields"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-checkbox>
-        </template>
-        <!-- switch -->
-        <template v-if="item.input_type == 'switch'">
-          <component-switch
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :viewFields="viewFields"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-switch>
-        </template>
-        <!-- number -->
-        <template v-if="item.input_type == 'number'">
-          <component-number
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :viewFields="viewFields"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-number>
-        </template>
-        <!-- select -->
-        <template v-if="item.input_type == 'select'">
-          <component-select
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :viewFields="viewFields"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-select>
-        </template>
-        <!-- cascader -->
-        <template v-if="item.input_type == 'cascader'">
-          <component-cascader
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :viewFields="viewFields"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-cascader>
-        </template>
-        <!-- cascader -->
-        <template v-if="item.input_type == 'slider'">
-          <component-slider
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :viewFields="viewFields"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-slider>
-        </template>
-        <!-- cascader -->
-        <template v-if="item.input_type == 'time-picker'">
-          <component-time-picker
-            :key="'' + uniqid + index"
-            :isForm="isForm"
-            :uniqid="'' + uniqid + index"
-            :labelAlgin="labelAlgin"
-            :viewFields="viewFields"
-            :item="item"
-            :formData="formData"
-            :field="item.field"
-          ></component-time-picker>
-        </template>
-        <!-- END : v-if="ignoreFields[item.field]" - end -->
+    <template v-for="(field, index) in newViewFields">
+      <!-- text -->
+      <template v-if="newItems[field].input_type == 'text'">
+        <component-text
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-text>
       </template>
-      <!-- END : v-for="(item, index) in items" -->
+      <!-- input_text -->
+      <template v-if="newItems[field].input_type == 'input'">
+        <component-input
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-input>
+      </template>
+      <!-- input_radio -->
+      <template v-if="newItems[field].input_type == 'radio'">
+        <component-radio
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-radio>
+      </template>
+      <!-- input_checkbox -->
+      <template v-if="newItems[field].input_type == 'checkbox'">
+        <component-checkbox
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-checkbox>
+      </template>
+      <!-- switch -->
+      <template v-if="newItems[field].input_type == 'switch'">
+        <component-switch
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-switch>
+      </template>
+      <!-- number -->
+      <template v-if="newItems[field].input_type == 'number'">
+        <component-number
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-number>
+      </template>
+      <!-- select -->
+      <template v-if="newItems[field].input_type == 'select'">
+        <component-select
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-select>
+      </template>
+      <!-- cascader -->
+      <template v-if="newItems[field].input_type == 'cascader'">
+        <component-cascader
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-cascader>
+      </template>
+      <!-- cascader -->
+      <template v-if="newItems[field].input_type == 'slider'">
+        <component-slider
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-slider>
+      </template>
+      <!-- cascader -->
+      <template v-if="newItems[field].input_type == 'time-picker'">
+        <component-time-picker
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-time-picker>
+      </template>
+      <!-- END : v-for="(field, index) in newViewFields" -->
     </template>
 
     <h1>
@@ -192,15 +190,15 @@ export default {
       type: Object,
       required: true,
     },
-    // 直接显示字段
-    viewFields: {
+    // 显示成text文本的字段
+    textFields: {
       type: Array,
       default: () => {
         return [];
       },
     },
-    // 直接隐藏字段
-    ignoreFields: {
+    // 显示字段
+    viewFields: {
       type: Array,
       default: () => {
         return [];
@@ -208,7 +206,30 @@ export default {
     },
   },
   beforeCreate() {},
-  created() {},
+  created() {
+    // 将数组形式的字段信息转换成field对象
+    const newItems = {};
+    for (const index in this.items) {
+      const item = this.items[index];
+      newItems[item.field] = item;
+    }
+    this.newItems = newItems;
+    // 计算真正显示的字段信息
+    const newViewFields = [];
+    if (0 === this.viewFields.length) {
+      for (const key in this.newItems) {
+        newViewFields.push(this.items[key].field);
+      }
+    } else {
+      for (const key in this.viewFields) {
+        const field = this.viewFields[key];
+        if (this.newItems[field]) {
+          newViewFields.push(field);
+        }
+      }
+    }
+    this.newViewFields = newViewFields;
+  },
   data() {
     return {};
   },

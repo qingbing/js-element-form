@@ -40,7 +40,7 @@ export default {
       required: true,
     },
     // 直接显示字段
-    viewFields: {
+    textFields: {
       type: Array,
       default: () => {
         return [];
@@ -67,7 +67,7 @@ export default {
       this.isText = true;
     } else if (this.item.input_type === "text") {
       this.isText = true;
-    } else if (inArray(this.field, this.viewFields)) {
+    } else if (inArray(this.field, this.textFields)) {
       this.isText = true;
     } else {
       this.isText = false;
