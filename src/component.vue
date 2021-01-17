@@ -1,97 +1,101 @@
 <template>
   <div>
     <template v-for="(item, index) in items">
-      <!-- text -->
-      <template v-if="item.input_type == 'text'">
-        <component-text
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :item="item"
-          :formData="formData"
-          :field="item.field"
-        ></component-text>
+      <template v-if="!inArray(item.field, ignoreFields)">
+        <!-- text -->
+        <template v-if="item.input_type == 'text'">
+          <component-text
+            :key="'' + uniqid + index"
+            :isForm="isForm"
+            :uniqid="'' + uniqid + index"
+            :labelAlgin="labelAlgin"
+            :item="item"
+            :formData="formData"
+            :field="item.field"
+          ></component-text>
+        </template>
+        <!-- input_text -->
+        <template v-if="item.input_type == 'input'">
+          <component-input
+            :key="'' + uniqid + index"
+            :isForm="isForm"
+            :uniqid="'' + uniqid + index"
+            :labelAlgin="labelAlgin"
+            :viewFields="viewFields"
+            :item="item"
+            :formData="formData"
+            :field="item.field"
+          ></component-input>
+        </template>
+        <!-- input_radio -->
+        <template v-if="item.input_type == 'radio'">
+          <component-radio
+            :key="'' + uniqid + index"
+            :isForm="isForm"
+            :uniqid="'' + uniqid + index"
+            :labelAlgin="labelAlgin"
+            :viewFields="viewFields"
+            :item="item"
+            :formData="formData"
+            :field="item.field"
+          ></component-radio>
+        </template>
+        <!-- input_checkbox -->
+        <template v-if="item.input_type == 'checkbox'">
+          <component-checkbox
+            :key="'' + uniqid + index"
+            :isForm="isForm"
+            :uniqid="'' + uniqid + index"
+            :labelAlgin="labelAlgin"
+            :viewFields="viewFields"
+            :item="item"
+            :formData="formData"
+            :field="item.field"
+          ></component-checkbox>
+        </template>
+        <!-- switch -->
+        <template v-if="item.input_type == 'switch'">
+          <component-switch
+            :key="'' + uniqid + index"
+            :isForm="isForm"
+            :uniqid="'' + uniqid + index"
+            :labelAlgin="labelAlgin"
+            :viewFields="viewFields"
+            :item="item"
+            :formData="formData"
+            :field="item.field"
+          ></component-switch>
+        </template>
+        <!-- number -->
+        <template v-if="item.input_type == 'number'">
+          <component-number
+            :key="'' + uniqid + index"
+            :isForm="isForm"
+            :uniqid="'' + uniqid + index"
+            :labelAlgin="labelAlgin"
+            :viewFields="viewFields"
+            :item="item"
+            :formData="formData"
+            :field="item.field"
+          ></component-number>
+        </template>
+        <!-- select -->
+        <template v-if="item.input_type == 'select'">
+          <component-select
+            :key="'' + uniqid + index"
+            :isForm="isForm"
+            :uniqid="'' + uniqid + index"
+            :labelAlgin="labelAlgin"
+            :viewFields="viewFields"
+            :item="item"
+            :formData="formData"
+            :field="item.field"
+          ></component-select>
+        </template>
       </template>
-      <!-- input_text -->
-      <template v-if="item.input_type == 'input'">
-        <component-input
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :viewFields="viewFields"
-          :item="item"
-          :formData="formData"
-          :field="item.field"
-        ></component-input>
-      </template>
-      <!-- input_radio -->
-      <template v-if="item.input_type == 'radio'">
-        <component-radio
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :viewFields="viewFields"
-          :item="item"
-          :formData="formData"
-          :field="item.field"
-        ></component-radio>
-      </template>
-      <!-- input_checkbox -->
-      <template v-if="item.input_type == 'checkbox'">
-        <component-checkbox
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :viewFields="viewFields"
-          :item="item"
-          :formData="formData"
-          :field="item.field"
-        ></component-checkbox>
-      </template>
-      <!-- switch -->
-      <template v-if="item.input_type == 'switch'">
-        <component-switch
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :viewFields="viewFields"
-          :item="item"
-          :formData="formData"
-          :field="item.field"
-        ></component-switch>
-      </template>
-      <!-- number -->
-      <template v-if="item.input_type == 'number'">
-        <component-number
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :viewFields="viewFields"
-          :item="item"
-          :formData="formData"
-          :field="item.field"
-        ></component-number>
-      </template>
-      <!-- select -->
-      <template v-if="item.input_type == 'select'">
-        <component-select
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :viewFields="viewFields"
-          :item="item"
-          :formData="formData"
-          :field="item.field"
-        ></component-select>
-      </template>
+      <!-- END : v-if="ignoreFields[item.field]" - end -->
     </template>
+    <!-- END : v-for="(item, index) in items" -->
 
     <h1>
       <p>component</p>
@@ -101,7 +105,7 @@
 </template>
 
 <script>
-import { uniqid } from "@qingbing/helper";
+import { uniqid, inArray } from "@qingbing/helper";
 import ComponentText from "./components/text";
 import ComponentInput from "./components/input";
 import ComponentRadio from "./components/radio";
@@ -152,6 +156,13 @@ export default {
         return [];
       },
     },
+    // 直接隐藏字段
+    ignoreFields: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   beforeCreate() {},
   created() {},
@@ -167,7 +178,11 @@ export default {
     ComponentNumber,
     ComponentSelect,
   },
-  methods: {},
+  methods: {
+    inArray(v, arr) {
+      return inArray(v, arr);
+    },
+  },
 };
 </script>
 

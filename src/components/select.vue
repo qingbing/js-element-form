@@ -16,10 +16,10 @@
       :clearable="clearable"
       :multiple="multiple"
       :filterable="filterable"
+      :placeholder="placeholder"
     >
       <template v-for="(val, key) in item.exts.options">
-        <el-option :label="val" :key="uniqid + key" :value="key" border>
-        </el-option>
+        <el-option :label="val" :key="uniqid + key" :value="key"> </el-option>
       </template>
     </el-select>
   </el-form-item>
@@ -58,6 +58,7 @@ export default {
       } else {
         this.placeholder = placeholder;
       }
+
       this.clearable = this.getExtData("clearable", true);
       this.multiple = this.getExtData("multiple", false);
       this.filterable = this.getExtData("filterable", false);
