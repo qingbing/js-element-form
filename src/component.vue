@@ -105,6 +105,19 @@
             :field="item.field"
           ></component-cascader>
         </template>
+        <!-- cascader -->
+        <template v-if="item.input_type == 'slider'">
+          <component-slider
+            :key="'' + uniqid + index"
+            :isForm="isForm"
+            :uniqid="'' + uniqid + index"
+            :labelAlgin="labelAlgin"
+            :viewFields="viewFields"
+            :item="item"
+            :formData="formData"
+            :field="item.field"
+          ></component-slider>
+        </template>
         <!-- END : v-if="ignoreFields[item.field]" - end -->
       </template>
       <!-- END : v-for="(item, index) in items" -->
@@ -127,6 +140,8 @@ import ComponentSwitch from "./components/switch";
 import ComponentNumber from "./components/number";
 import ComponentSelect from "./components/select";
 import ComponentCascader from "./components/cascader";
+import ComponentSlider from "./components/slider";
+
 /**
  * ajax 的函数在 use 后面自定义
  * 自定义一些验证规则
@@ -192,6 +207,7 @@ export default {
     ComponentNumber,
     ComponentSelect,
     ComponentCascader,
+    ComponentSlider,
   },
   methods: {
     inArray(v, arr) {
