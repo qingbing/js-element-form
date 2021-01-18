@@ -144,6 +144,19 @@
           :field="field"
         ></component-datetime-picker>
       </template>
+      <!-- rate -->
+      <template v-if="newItems[field].input_type == 'rate'">
+        <component-rate
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-rate>
+      </template>
       <!-- END : v-for="(field, index) in newViewFields" -->
     </template>
 
@@ -167,6 +180,7 @@ import ComponentCascader from "./components/cascader";
 import ComponentSlider from "./components/slider";
 import ComponentTimePicker from "./components/time-picker";
 import ComponentDatetimePicker from "./components/datetime-picker";
+import ComponentRate from "./components/rate";
 
 /**
  * ajax 的函数在 use 后面自定义
@@ -259,6 +273,7 @@ export default {
     ComponentSlider,
     ComponentTimePicker,
     ComponentDatetimePicker,
+    ComponentRate,
   },
 };
 </script>
