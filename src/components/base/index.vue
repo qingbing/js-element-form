@@ -72,7 +72,6 @@ export default {
     } else {
       this.isText = false;
     }
-    // console.log(this.field, this.isText); //todo delete
   },
   data() {
     return {

@@ -118,7 +118,7 @@
           :field="field"
         ></component-slider>
       </template>
-      <!-- cascader -->
+      <!-- time-picker -->
       <template v-if="newItems[field].input_type == 'time-picker'">
         <component-time-picker
           :key="'' + uniqid + index"
@@ -131,6 +131,19 @@
           :field="field"
         ></component-time-picker>
       </template>
+      <!-- datetime-picker -->
+      <template v-if="newItems[field].input_type == 'datetime-picker'">
+        <component-datetime-picker
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-datetime-picker>
+      </template>
       <!-- END : v-for="(field, index) in newViewFields" -->
     </template>
 
@@ -142,7 +155,7 @@
 </template>
 
 <script>
-import { uniqid, inArray } from "@qingbing/helper";
+import { uniqid } from "@qingbing/helper";
 import ComponentText from "./components/text";
 import ComponentInput from "./components/input";
 import ComponentRadio from "./components/radio";
@@ -153,6 +166,7 @@ import ComponentSelect from "./components/select";
 import ComponentCascader from "./components/cascader";
 import ComponentSlider from "./components/slider";
 import ComponentTimePicker from "./components/time-picker";
+import ComponentDatetimePicker from "./components/datetime-picker";
 
 /**
  * ajax 的函数在 use 后面自定义
@@ -244,11 +258,7 @@ export default {
     ComponentCascader,
     ComponentSlider,
     ComponentTimePicker,
-  },
-  methods: {
-    inArray(v, arr) {
-      return inArray(v, arr);
-    },
+    ComponentDatetimePicker,
   },
 };
 </script>
