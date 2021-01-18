@@ -157,6 +157,19 @@
           :field="field"
         ></component-rate>
       </template>
+      <!-- rate -->
+      <template v-if="newItems[field].input_type == 'color'">
+        <component-color-picker
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-color-picker>
+      </template>
       <!-- END : v-for="(field, index) in newViewFields" -->
     </template>
 
@@ -181,6 +194,7 @@ import ComponentSlider from "./components/slider";
 import ComponentTimePicker from "./components/time-picker";
 import ComponentDatetimePicker from "./components/datetime-picker";
 import ComponentRate from "./components/rate";
+import ComponentColorPicker from "./components/color";
 
 /**
  * ajax 的函数在 use 后面自定义
@@ -274,6 +288,7 @@ export default {
     ComponentTimePicker,
     ComponentDatetimePicker,
     ComponentRate,
+    ComponentColorPicker,
   },
 };
 </script>
