@@ -27,6 +27,19 @@
           :field="field"
         ></component-input>
       </template>
+      <!-- textarea -->
+      <template v-if="newItems[field].input_type == 'textarea'">
+        <component-textarea
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component-textarea>
+      </template>
       <!-- input_radio -->
       <template v-if="newItems[field].input_type == 'radio'">
         <component-radio
@@ -197,6 +210,7 @@
 import { uniqid } from "@qingbing/helper";
 import ComponentText from "./components/text";
 import ComponentInput from "./components/input";
+import ComponentTextarea from "./components/textarea";
 import ComponentRadio from "./components/radio";
 import ComponentCheckbox from "./components/checkbox";
 import ComponentSwitch from "./components/switch";
@@ -292,6 +306,7 @@ export default {
   components: {
     ComponentText,
     ComponentInput,
+    ComponentTextarea,
     ComponentRadio,
     ComponentSwitch,
     ComponentCheckbox,
@@ -303,7 +318,7 @@ export default {
     ComponentDatetimePicker,
     ComponentRate,
     ComponentColorPicker,
-    ComponentUploader
+    ComponentUploader,
   },
 };
 </script>
