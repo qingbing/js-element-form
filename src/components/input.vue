@@ -47,8 +47,6 @@ export default {
       this.maxlength = this.getExtData("maxlength", null);
       this.minlength = this.getExtData("minlength", null);
       this.showWordLimit = this.getExtData("showWordLimit", true);
-
-      // 远程
     }
   },
 };
