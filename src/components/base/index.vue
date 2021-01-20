@@ -24,6 +24,11 @@ import { inArray, isUndefined } from "@qingbing/helper";
 // 导出
 export default {
   props: {
+    // ajax post调用的函数
+    ajaxPost: {
+      type: Function,
+      default: null,
+    },
     // 是否表单组件
     isForm: {
       type: Boolean,

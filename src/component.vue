@@ -1,216 +1,32 @@
-<template>
-  <div>
-    <template v-for="(field, index) in newViewFields">
-      <!-- text -->
-      <template v-if="newItems[field].input_type == 'text'">
-        <component-text
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-text>
-      </template>
-      <!-- input_text -->
-      <template v-if="newItems[field].input_type == 'input'">
-        <component-input
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-input>
-      </template>
-      <!-- textarea -->
-      <template v-if="newItems[field].input_type == 'textarea'">
-        <component-textarea
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-textarea>
-      </template>
-      <!-- input_radio -->
-      <template v-if="newItems[field].input_type == 'radio'">
-        <component-radio
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-radio>
-      </template>
-      <!-- input_checkbox -->
-      <template v-if="newItems[field].input_type == 'checkbox'">
-        <component-checkbox
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-checkbox>
-      </template>
-      <!-- switch -->
-      <template v-if="newItems[field].input_type == 'switch'">
-        <component-switch
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-switch>
-      </template>
-      <!-- number -->
-      <template v-if="newItems[field].input_type == 'number'">
-        <component-number
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-number>
-      </template>
-      <!-- select -->
-      <template v-if="newItems[field].input_type == 'select'">
-        <component-select
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-select>
-      </template>
-      <!-- cascader -->
-      <template v-if="newItems[field].input_type == 'cascader'">
-        <component-cascader
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-cascader>
-      </template>
-      <!-- cascader -->
-      <template v-if="newItems[field].input_type == 'slider'">
-        <component-slider
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-slider>
-      </template>
-      <!-- time-picker -->
-      <template v-if="newItems[field].input_type == 'time-picker'">
-        <component-time-picker
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-time-picker>
-      </template>
-      <!-- datetime-picker -->
-      <template v-if="newItems[field].input_type == 'datetime-picker'">
-        <component-datetime-picker
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-datetime-picker>
-      </template>
-      <!-- rate -->
-      <template v-if="newItems[field].input_type == 'rate'">
-        <component-rate
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-rate>
-      </template>
-      <!-- color -->
-      <template v-if="newItems[field].input_type == 'color'">
-        <component-color-picker
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-color-picker>
-      </template>
-      <!-- rate -->
-      <template v-if="newItems[field].input_type == 'uploader'">
-        <component-uploader
-          :key="'' + uniqid + index"
-          :isForm="isForm"
-          :uniqid="'' + uniqid + index"
-          :labelAlgin="labelAlgin"
-          :textFields="textFields"
-          :item="newItems[field]"
-          :formData="formData"
-          :field="field"
-        ></component-uploader>
-      </template>
-      <!-- END : v-for="(field, index) in newViewFields" -->
-    </template>
 
-    <h1>
-      <p>component</p>
-      {{ formData }}
-    </h1>
-  </div>
+<template>
+  <span>
+    <template v-for="(field, index) in newViewFields">
+      <template v-if="inSubComponent(newItems[field].input_type)">
+        <component
+          :is="newItems[field].input_type"
+          :key="'' + uniqid + index"
+          :isForm="isForm"
+          :uniqid="'' + uniqid + index"
+          :labelAlgin="labelAlgin"
+          :textFields="textFields"
+          :item="newItems[field]"
+          :formData="formData"
+          :field="field"
+        ></component>
+      </template>
+    </template>
+  </span>
 </template>
 
 <script>
-import { uniqid } from "@qingbing/helper";
+// 导入函数
+import { uniqid, inArray, isDev } from "@qingbing/helper";
+// 导入组件
 import ComponentText from "./components/text";
 import ComponentInput from "./components/input";
 import ComponentTextarea from "./components/textarea";
+import ComponentAutocomplete from "./components/autocomplete";
 import ComponentRadio from "./components/radio";
 import ComponentCheckbox from "./components/checkbox";
 import ComponentSwitch from "./components/switch";
@@ -233,6 +49,11 @@ import ComponentUploader from "./components/uploader";
  */
 export default {
   props: {
+    // ajax post调用的函数
+    ajaxPost: {
+      type: Function,
+      default: null,
+    },
     // 组件唯一标志符
     uniqid: {
       type: String,
@@ -301,24 +122,51 @@ export default {
     this.newViewFields = newViewFields;
   },
   data() {
-    return {};
+    // 从本组件中获取定义支持的子组件
+    const componentIds = [];
+    for (const key in this.$options.components) {
+      if (
+        Object.hasOwnProperty.call(this.$options.components, key) &&
+        "ElementForm" !== key
+      ) {
+        componentIds.push(key);
+      }
+    }
+    return {
+      componentIds,
+    };
   },
   components: {
-    ComponentText,
-    ComponentInput,
-    ComponentTextarea,
-    ComponentRadio,
-    ComponentSwitch,
-    ComponentCheckbox,
-    ComponentNumber,
-    ComponentSelect,
-    ComponentCascader,
-    ComponentSlider,
-    ComponentTimePicker,
-    ComponentDatetimePicker,
-    ComponentRate,
-    ComponentColorPicker,
-    ComponentUploader,
+    "view-text": ComponentText,
+    "input-text": ComponentInput,
+    "input-password": ComponentInput,
+    "input-area": ComponentTextarea,
+    "input-number": ComponentNumber,
+    "input-radio": ComponentRadio,
+    "input-checkbox": ComponentCheckbox,
+    "input-select": ComponentSelect,
+    "ele-switch": ComponentSwitch,
+    "ele-cascader": ComponentCascader,
+    "ele-slider": ComponentSlider,
+    "ele-rate": ComponentRate,
+    "ele-color": ComponentColorPicker,
+    "ele-uploader": ComponentUploader,
+    "time-picker": ComponentTimePicker,
+    "datetime-picker": ComponentDatetimePicker,
+    "auto-complete": ComponentAutocomplete,
+  },
+  methods: {
+    inSubComponent(componentId) {
+      if (inArray(componentId, this.componentIds)) {
+        return true;
+      }
+      if (isDev()) {
+        console.error(`element-form中不支持子组件：${componentId}`);
+      } else {
+        console.log(`element-form中不支持子组件：${componentId}`);
+      }
+      return false;
+    },
   },
 };
 </script>
