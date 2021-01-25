@@ -1,4 +1,3 @@
-
 <template>
   <span>
     <template v-for="(field, index) in newViewFields">
@@ -6,6 +5,7 @@
         <component
           :is="newItems[field].input_type"
           :key="'' + uniqid + index"
+          :ajaxMethod="ajaxMethod"
           :isForm="isForm"
           :uniqid="'' + uniqid + index"
           :labelAlgin="labelAlgin"
@@ -49,11 +49,6 @@ import ComponentUploader from "./components/uploader";
  */
 export default {
   props: {
-    // ajax post调用的函数
-    ajaxPost: {
-      type: Function,
-      default: null,
-    },
     // 组件唯一标志符
     uniqid: {
       type: String,

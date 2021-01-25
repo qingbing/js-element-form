@@ -25,7 +25,7 @@ import { inArray, isUndefined } from "@qingbing/helper";
 export default {
   props: {
     // ajax post调用的函数
-    ajaxPost: {
+    ajaxMethod: {
       type: Function,
       default: null,
     },

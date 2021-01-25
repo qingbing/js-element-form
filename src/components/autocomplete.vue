@@ -63,6 +63,7 @@ export default {
           this.beforeFetch = this.getExtData("beforeFetch");
           this.fetchUrl = fetchUrl;
           this.fetchData = this.getExtData("fetchData", {});
+          this.fetchMethod = this.getExtData("fetchMethod", "POST");
           this.fetchSuggestions = this.customFetchSuggestions;
         }
       }
@@ -71,15 +72,25 @@ export default {
   methods: {
     customHandleSelect(item) {
       if (isDev()) {
+        // 打印选择后的选项
         console.log(item);
       }
     },
-    customFetchSuggestions(queryString, callback) {
-      callback([
-        { value: "三全鲜食1", address: "长宁区新渔路1" },
-        { value: "三全鲜食2", address: "长宁区新渔路2" },
-        { value: "三全鲜食3", address: "长宁区新渔路2" },
-      ]);
+    async customFetchSuggestions(queryString, callback) {
+      if (isFunction(this.beforeFetch)) {
+        // 在获取远端数据之前需要执行的函数，可在该函数中添加获取是的参数等信息
+        this.beforeFetch(this.fetchData, this.formData);
+      }
+      // 增加查询的输入框信息
+      this.fetchData.keyword = queryString;
+      // 获取远端数据
+      const searchKvs = await this.ajaxMethod(
+        this.fetchUrl,
+        this.fetchData,
+        this.fetchMethod
+      );
+      // 界面回调
+      callback(searchKvs);
     },
   },
 };
