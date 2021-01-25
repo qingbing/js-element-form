@@ -14,6 +14,7 @@
     <el-autocomplete
       v-model="formData[field]"
       :placeholder="placeholder"
+      :triggerOnFocus="triggerOnFocus"
       :prefixIcon="prefixIcon"
       :suffixIcon="suffixIcon"
       :clearable="clearable"
@@ -32,6 +33,8 @@ export default {
   extends: Base,
   created() {
     if (!this.isText) {
+      // 输入后才有提示
+      this.triggerOnFocus = this.getExtData("triggerOnFocus", false);
       // 提示信息
       const placeholder = this.getExtData("placeholder");
       if (isUndefined(placeholder)) {
