@@ -54,9 +54,9 @@ export default {
         this.handleSelect = this.customHandleSelect;
       }
       // 远程输入
-      const fetchSuggestions = this.getExtData("fetchSuggestions");
-      if (isFunction(fetchSuggestions)) {
-        this.fetchSuggestions = fetchSuggestions;
+      const callback = this.getExtData("callback");
+      if (isFunction(callback)) {
+        this.fetchSuggestions = callback;
       } else {
         const fetchUrl = this.getExtData("fetchUrl");
         if (isUndefined(fetchUrl)) {
@@ -79,13 +79,13 @@ export default {
         console.log(item);
       }
     },
-    async customFetchSuggestions(queryString, callback) {
+    async customFetchSuggestions(keyword, cb) {
       if (isFunction(this.beforeFetch)) {
         // 在获取远端数据之前需要执行的函数，可在该函数中添加获取是的参数等信息
-        this.beforeFetch(this.fetchData, this.formData);
+        await this.beforeFetch(this.fetchData, this.formData);
       }
       // 增加查询的输入框信息
-      this.fetchData.keyword = queryString;
+      this.fetchData.keyword = keyword;
       // 获取远端数据
       const searchKvs = await this.ajaxMethod(
         this.fetchUrl,
@@ -93,7 +93,7 @@ export default {
         this.fetchMethod
       );
       // 界面回调
-      callback(searchKvs);
+      cb(searchKvs);
     },
   },
 };
