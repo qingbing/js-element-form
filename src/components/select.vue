@@ -9,18 +9,55 @@
     {{ viewText }}
   </el-form-item>
 
-  <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
+  <!-- 表单组件～常规选项 -->
+  <el-form-item
+    v-else-if="!isRemote"
+    :label="item.label"
+    :key="uniqid"
+    class="text-left"
+  >
     <el-select
       v-model="formData[field]"
+      :placeholder="placeholder"
       :clearable="clearable"
       :multiple="multiple"
       :filterable="filterable"
-      :placeholder="placeholder"
     >
-      <template v-for="(val, key) in item.exts.options">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+      </el-option>
+      <!-- <template v-for="(val, key) in options">
         <el-option :label="val" :key="uniqid + key" :value="key"> </el-option>
-      </template>
+      </template> -->
+    </el-select>
+  </el-form-item>
+
+  <!-- 表单组件～远端选项 -->
+  <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
+    <el-select
+      v-model="formData[field]"
+      :placeholder="placeholder"
+      :clearable="clearable"
+      :multiple="multiple"
+      remote
+      filterable
+      :loading="loading"
+      :remote-method="remoteMethod"
+    >
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+      </el-option>
+      <!-- <template v-for="(val, key) in options">
+        <el-option :label="val" :key="uniqid + key" :value="key"> </el-option>
+      </template> -->
     </el-select>
   </el-form-item>
 </template>
@@ -28,10 +65,15 @@
 <script>
 // 导入
 import Base from "./base";
-import { isArray, isUndefined, sprintf, col_value } from "@qingbing/helper";
+import { isArray, isUndefined, isFunction, sprintf } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,
+  data() {
+    return {
+      options: [],
+    };
+  },
   created() {
     if (this.isText) {
       const vals = [];
@@ -58,13 +100,81 @@ export default {
       } else {
         this.placeholder = placeholder;
       }
-
       this.clearable = this.getExtData("clearable", true);
       this.multiple = this.getExtData("multiple", false);
-      this.filterable = this.getExtData("filterable", false);
-    }
+      // 默认选项
+      this.options = this.releaseOptions(this.getExtData("options", {}));
 
-    // 远程搜索
+      const callback = this.getExtData("callback");
+      const fetchUrl = this.getExtData("fetchUrl");
+      // 远端定义 url
+      this.beforeFetch = this.getExtData("beforeFetch");
+      if (!isUndefined(callback)) {
+        // 远端定义方法
+        if (!isFunction(callback)) {
+          throw new Error(`ElementForm-select 中 callback 必须定义成函数`);
+        }
+        this.userCallback = callback;
+
+        this.isRemote = true;
+        this.remoteType = "function";
+        this.remoteMethod = this.customRemoteMethod;
+      } else if (!isUndefined(fetchUrl)) {
+        this.fetchUrl = fetchUrl;
+        this.fetchData = this.getExtData("fetchData", {});
+        this.fetchMethod = this.getExtData("fetchMethod", "POST");
+
+        this.isRemote = true;
+        this.remoteType = "ajax";
+        this.remoteMethod = this.customRemoteMethod;
+      } else {
+        this.isRemote = false;
+      }
+      // 非远端和远端的参数赋值
+      if (this.isRemote) {
+        this.loading = false;
+        console.log(this);
+      } else {
+        // 可搜索
+        this.filterable = this.getExtData("filterable", false);
+      }
+    }
+  },
+  methods: {
+    async customRemoteMethod(keyword) {
+      if (isFunction(this.beforeFetch)) {
+        // 在获取远端数据之前需要执行的函数，可在该函数中添加获取是的参数等信息
+        await this.beforeFetch(this.fetchData, this.formData);
+      }
+      this.loading = true;
+      if ("function" == this.remoteType) {
+        this.options = this.releaseOptions(await this.userCallback(keyword));
+      } else {
+        // 增加查询的输入框信息
+        this.fetchData.keyword = keyword;
+        // 获取远端数据
+        this.options = await this.ajaxMethod(
+          this.fetchUrl,
+          this.fetchData,
+          this.fetchMethod
+        );
+      }
+      this.loading = false;
+    },
+    // 解析传递的数据成 options
+    releaseOptions(ops) {
+      const options = [];
+      for (const key in ops) {
+        if (Object.hasOwnProperty.call(ops, key)) {
+          const element = ops[key];
+          options.push({
+            label: ops[key],
+            value: key,
+          });
+        }
+      }
+      return options;
+    },
   },
 };
 </script>
