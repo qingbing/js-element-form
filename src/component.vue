@@ -13,6 +13,7 @@
           :item="newItems[field]"
           :formData="formData"
           :field="field"
+          @addRule="addRule"
         ></component>
       </template>
     </template>
@@ -21,7 +22,7 @@
 
 <script>
 // 导入函数
-import { uniqid, inArray, isDev } from "@qingbing/helper";
+import { uniqid, inArray, isDev, isUndefined, each } from "@qingbing/helper";
 // 导入组件
 import ComponentText from "./components/text";
 import ComponentInput from "./components/input";
@@ -76,6 +77,13 @@ export default {
       type: Object,
       required: true,
     },
+    // 表单数据
+    rules: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
     // 显示成text文本的字段
     textFields: {
       type: Array,
@@ -95,38 +103,33 @@ export default {
   created() {
     // 将数组形式的字段信息转换成field对象
     const newItems = {};
-    for (const index in this.items) {
-      const item = this.items[index];
+    each(this.items, (idx, item) => {
       newItems[item.field] = item;
-    }
+    });
     this.newItems = newItems;
     // 计算真正显示的字段信息
     const newViewFields = [];
     if (0 === this.viewFields.length) {
-      for (const key in this.newItems) {
-        newViewFields.push(this.items[key].field);
-      }
+      each(this.newItems, (idx, item) => {
+        newViewFields.push(item.field);
+      });
     } else {
-      for (const key in this.viewFields) {
-        const field = this.viewFields[key];
+      each(this.viewFields, (idx, field) => {
         if (this.newItems[field]) {
           newViewFields.push(field);
         }
-      }
+      });
     }
     this.newViewFields = newViewFields;
   },
   data() {
     // 从本组件中获取定义支持的子组件
     const componentIds = [];
-    for (const key in this.$options.components) {
-      if (
-        Object.hasOwnProperty.call(this.$options.components, key) &&
-        "ElementForm" !== key
-      ) {
+    each(this.$options.components, (key, _) => {
+      if ("ElementForm" !== key) {
         componentIds.push(key);
       }
-    }
+    });
     return {
       componentIds,
     };
@@ -161,6 +164,15 @@ export default {
         console.log(`element-form中不支持子组件：${componentId}`);
       }
       return false;
+    },
+    /**
+     * 添加一个规则暴露出来
+     */
+    addRule(field, rule) {
+      if (isUndefined(this.rules[field])) {
+        this.rules[field] = [];
+      }
+      this.rules[field].push(rule);
     },
   },
 };

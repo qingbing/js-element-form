@@ -10,7 +10,7 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :key="uniqid">
+  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid">
     <el-input
       v-model="formData[field]"
       :placeholder="placeholder"

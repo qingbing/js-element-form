@@ -20,7 +20,16 @@
 
 <script>
 // 导入
-import { inArray, isUndefined } from "@qingbing/helper";
+import {
+  isString,
+  isArray,
+  isUndefined,
+  isEmpty,
+  inArray,
+  replace,
+  each,
+} from "@qingbing/helper";
+import DefMsgs from "./../../message";
 // 导出
 export default {
   props: {
@@ -68,6 +77,7 @@ export default {
     },
   },
   created() {
+    // 判断字段渲染的类型
     if (!this.isForm) {
       this.isText = true;
     } else if (this.item.input_type === "text") {
@@ -77,6 +87,24 @@ export default {
     } else {
       this.isText = false;
     }
+    // 设置表单显示时的规则
+    if (this.isText) {
+      return;
+    }
+    // 将配置的规则处理成key-values
+    this.itemsRules = {};
+    if (!isArray(this.item.rules)) {
+      return;
+    }
+
+    each(this.item.rules, (idx, rule) => {
+      if (!isUndefined(rule.type)) {
+        rule.label = this.item.label;
+        this.itemsRules[rule.type] = rule;
+      }
+    });
+    // 处理必须的规则
+    this.addRuleRequired();
   },
   data() {
     return {
@@ -95,6 +123,56 @@ export default {
         return defaultVal;
       }
       return this.item.exts[field];
+    },
+    // 添加一个规则
+    addRule(rule) {
+      this.$emit("addRule", this.field, rule);
+    },
+    // 获取规则的提示信息
+    getRuleMessage(rule, defMsg) {
+      // 设置
+      if (!isUndefined(rule.message) && !rule.message) {
+        return rule.message;
+      }
+      if (isString(defMsg)) {
+        return replace(defMsg, rule);
+      }
+      if (rule.len && isNumber(rule.len)) {
+        return replace(defMsg.len, rule);
+      }
+      if (rule.max && isNumber(rule.max) && rule.min && isNumber(rule.min)) {
+        return replace(defMsg.range, rule);
+      }
+      if (rule.max && isNumber(rule.max)) {
+        return replace(defMsg.max, rule);
+      }
+      if (rule.min && isNumber(rule.min)) {
+        return replace(defMsg.min, rule);
+      }
+      return replace(defMsg.base, rule);
+    },
+    // 获取规则触发事件
+    getRuleTrigger(rule, defEvent) {
+      if (!isEmpty(rule.trigger)) {
+        return rule.trigger;
+      }
+      if (!isEmpty(defEvent)) {
+        return defEvent;
+      }
+      return "blur";
+    },
+    addRuleRequired() {
+      if (this.itemsRules.required) {
+        const rule = this.itemsRules.required;
+        if (!isUndefined(rule.value) && !rule.value) {
+          return;
+        }
+        this.addRule({
+          required: true,
+          message: this.getRuleMessage(rule, DefMsgs.required),
+          trigger: this.getRuleTrigger(rule),
+        });
+      }
     },
   },
 };

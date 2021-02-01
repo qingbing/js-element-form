@@ -10,7 +10,7 @@
   </el-form-item>
   
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
+  <el-form-item v-else :label="item.label" :key="uniqid" :prop="field" class="text-left">
     <el-switch
       v-model="formData[field]"
       :disabled="type == 'view'"

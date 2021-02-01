@@ -10,7 +10,7 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
+  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
     <el-checkbox-group v-model="formData[field]" :min="min" :max="max">
       <template v-for="(val, key) in item.exts.options">
         <el-checkbox :label="key" :key="uniqid + key" border>{{
@@ -24,7 +24,7 @@
 <script>
 // 导入
 import Base from "./base";
-import { isArray } from "@qingbing/helper";
+import { isArray, each } from "@qingbing/helper";
 
 // 导出
 export default {
@@ -34,14 +34,10 @@ export default {
       this.formData[this.field] = [];
     }
     if (this.isText) {
-      const selected = this.formData[this.field];
-      const options = this.item.exts.options;
       const ts = [];
-      for (const i in selected) {
-        if (options[selected[i]]) {
-          ts.push(options[selected[i]]);
-        }
-      }
+      each(this.formData[this.field], (idx, select) => {
+        ts.push(this.item.exts.options[select]);
+      });
       this.viewText = ts.join(",");
     } else {
       this.min = this.getExtData("min", null);

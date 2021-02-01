@@ -10,7 +10,7 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
+  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
     <el-cascader
       v-model="formData[field]"
       :options="options"
@@ -25,7 +25,7 @@
 <script>
 // 导入
 import Base from "./base";
-import { copy, isArray, isUndefined } from "@qingbing/helper";
+import { copy, isArray, isUndefined, each } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,
@@ -48,15 +48,15 @@ export default {
         }
         let key = selected.shift();
         let inOption = false;
-        for (const i in options) {
-          if (options[i].value != key) {
-            continue;
+        each(options, (idx, option) => {
+          if (option.value != key) {
+            return;
           }
           inOption = true;
-          viewText.push(options[i].label);
-          options = isUndefined(options[i].children) ? [] : options[i].children;
-          break;
-        }
+          viewText.push(option.label);
+          options = isUndefined(option.children) ? [] : option.children;
+          return false;
+        });
         if (!inOption) {
           break;
         }

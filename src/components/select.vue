@@ -13,6 +13,7 @@
   <el-form-item
     v-else-if="!isRemote"
     :label="item.label"
+    :prop="field"
     :key="uniqid"
     class="text-left"
   >
@@ -37,7 +38,7 @@
   </el-form-item>
 
   <!-- 表单组件～远端选项 -->
-  <el-form-item v-else :label="item.label" :key="uniqid" class="text-left">
+  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
     <el-select
       v-model="formData[field]"
       :placeholder="placeholder"
@@ -65,7 +66,13 @@
 <script>
 // 导入
 import Base from "./base";
-import { isArray, isUndefined, isFunction, sprintf } from "@qingbing/helper";
+import {
+  isArray,
+  isUndefined,
+  isFunction,
+  sprintf,
+  each,
+} from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,
@@ -87,11 +94,9 @@ export default {
       }
       const options = this.item.exts.options;
       const ts = [];
-      for (const i in selected) {
-        if (options[selected[i]]) {
-          ts.push(options[selected[i]]);
-        }
-      }
+      each(selected, (idx, select) => {
+        ts.push(options[select]);
+      });
       this.viewText = ts.join(",");
     } else {
       const placeholder = this.getExtData("placeholder");
@@ -133,7 +138,6 @@ export default {
       // 非远端和远端的参数赋值
       if (this.isRemote) {
         this.loading = false;
-        console.log(this);
       } else {
         // 可搜索
         this.filterable = this.getExtData("filterable", false);
@@ -164,15 +168,12 @@ export default {
     // 解析传递的数据成 options
     releaseOptions(ops) {
       const options = [];
-      for (const key in ops) {
-        if (Object.hasOwnProperty.call(ops, key)) {
-          const element = ops[key];
-          options.push({
-            label: ops[key],
-            value: key,
-          });
-        }
-      }
+      each(ops, (key, op) => {
+        options.push({
+          label: op,
+          value: key,
+        });
+      });
       return options;
     },
   },
