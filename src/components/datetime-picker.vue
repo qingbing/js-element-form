@@ -10,7 +10,13 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
+  <el-form-item
+    v-else
+    :label="item.label"
+    :prop="field"
+    :key="uniqid"
+    class="text-left"
+  >
     <el-date-picker
       v-model="formData[field]"
       :placeholder="placeholder"
@@ -21,6 +27,7 @@
       :format="format"
       :valueFormat="valueFormat"
       :pickerOptions="pickerOptions"
+      :ref="field"
     >
     </el-date-picker>
   </el-form-item>
@@ -158,6 +165,12 @@ export default {
 
       this.placeholder = placeholder;
       this.format = format;
+      if (this.isDateRule && "timestamp" != valueFormat) {
+        // 在 date 规则里，值的格式只能为 timestamp
+        throw new Error(
+          "给 datetime-picker 设置 date 格式时，valueFormat 只能为 timestamp"
+        );
+      }
       this.valueFormat = valueFormat;
       this.rangeSeparator = rangeSeparator;
       this.startPlaceholder = startPlaceholder;

@@ -58,7 +58,7 @@ const messages = {
   },
   // 非原生组件支持的验证规则
   username: "{label} 不是有效的用户名",
-  password: "{label} 不是有效的密码",
+  password: "{label} 必须包含 数字、字母、特殊字符 中至少两种",
   zipcode: "{label} 不是有效的邮政编码",
   mobile: "{label} 不是有效的手机号码",
   phone: "{label} 不是有效的座机号码",

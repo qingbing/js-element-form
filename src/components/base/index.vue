@@ -22,14 +22,19 @@
 // 导入
 import {
   isString,
+  isNumber,
   isArray,
   isUndefined,
+  isFunction,
+  isObject,
   isEmpty,
   inArray,
   replace,
+  copy,
   each,
 } from "@qingbing/helper";
 import DefMsgs from "./../../message";
+import moment from "moment";
 // 导出
 export default {
   props: {
@@ -91,20 +96,20 @@ export default {
     if (this.isText) {
       return;
     }
-    // 将配置的规则处理成key-values
-    this.itemsRules = {};
     if (!isArray(this.item.rules)) {
       return;
     }
 
+    // 规则处理
     each(this.item.rules, (idx, rule) => {
       if (!isUndefined(rule.type)) {
         rule.label = this.item.label;
-        this.itemsRules[rule.type] = rule;
+        const methodName = rule.type + "Rule";
+        if (isFunction(this[methodName])) {
+          this[methodName](rule);
+        }
       }
     });
-    // 处理必须的规则
-    this.addRuleRequired();
   },
   data() {
     return {
@@ -131,22 +136,22 @@ export default {
     // 获取规则的提示信息
     getRuleMessage(rule, defMsg) {
       // 设置
-      if (!isUndefined(rule.message) && !rule.message) {
+      if (!isEmpty(rule.message)) {
         return rule.message;
       }
       if (isString(defMsg)) {
         return replace(defMsg, rule);
       }
-      if (rule.len && isNumber(rule.len)) {
+      if (!isEmpty(rule.len)) {
         return replace(defMsg.len, rule);
       }
-      if (rule.max && isNumber(rule.max) && rule.min && isNumber(rule.min)) {
+      if (!isEmpty(rule.min) && !isEmpty(rule.max)) {
         return replace(defMsg.range, rule);
       }
-      if (rule.max && isNumber(rule.max)) {
+      if (!isEmpty(rule.max)) {
         return replace(defMsg.max, rule);
       }
-      if (rule.min && isNumber(rule.min)) {
+      if (!isEmpty(rule.min)) {
         return replace(defMsg.min, rule);
       }
       return replace(defMsg.base, rule);
@@ -161,18 +166,151 @@ export default {
       }
       return "blur";
     },
-    addRuleRequired() {
-      if (this.itemsRules.required) {
-        const rule = this.itemsRules.required;
-        if (!isUndefined(rule.value) && !rule.value) {
-          return;
-        }
-        this.addRule({
-          required: true,
-          message: this.getRuleMessage(rule, DefMsgs.required),
-          trigger: this.getRuleTrigger(rule),
-        });
+    // 常规规则添加
+    addCommonRule(rule, type, defEvent) {
+      this.addRule({
+        type,
+        message: this.getRuleMessage(rule, DefMsgs[type]),
+        trigger: this.getRuleTrigger(rule, defEvent),
+      });
+    },
+    // 必填规则
+    requiredRule(rule) {
+      if (!isUndefined(rule.value) && !rule.value) {
+        return;
       }
+      this.addRule({
+        required: true,
+        message: this.getRuleMessage(rule, DefMsgs.required),
+        trigger: this.getRuleTrigger(rule),
+      });
+    },
+    booleanRule(rule) {
+      rule.enum = [0, 1];
+      this.addRule({
+        type: "enum",
+        enum: rule.enum,
+        message: this.getRuleMessage(rule, DefMsgs.enum),
+        trigger: this.getRuleTrigger(rule, "click"),
+      });
+    },
+    enumRule(rule) {
+      if (isEmpty(rule.enum)) {
+        let ops = this.getExtData("options");
+        if (isArray(ops)) {
+          rule.enum = copy(ops);
+        } else {
+          rule.enum = [];
+          each(ops, (key, val) => {
+            rule.enum.push(key);
+          });
+        }
+      }
+      if (!isArray(rule.enum)) {
+        throw new Error("element-form 验证规则 enum 必须设置成数组");
+      }
+      this.addRule({
+        type: "enum",
+        enum: rule.enum,
+        message: this.getRuleMessage(rule, DefMsgs.enum),
+        trigger: this.getRuleTrigger(rule),
+      });
+    },
+    emailRule(rule) {
+      this.addCommonRule(rule, "email", "blur");
+    },
+    urlRule(rule) {
+      this.addCommonRule(rule, "url", "blur");
+    },
+    regexpRule(rule) {
+      this.addCommonRule(rule, "regexp", "blur");
+    },
+    hexRule(rule) {
+      this.addCommonRule(rule, "hex", "blur");
+    },
+    patternRule(rule) {
+      if (isEmpty(rule.pattern)) {
+        throw new Error("element-form 验证规则 pattern 必须设置 pattern");
+      }
+      if (isString(rule.pattern)) {
+        rule.pattern = eval(rule.pattern);
+      }
+      this.addRule({
+        pattern: rule.pattern,
+        message: this.getRuleMessage(rule, DefMsgs.pattern),
+        trigger: this.getRuleTrigger(rule),
+      });
+    },
+    usernameRule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.username);
+      rule.pattern = /^[\u4e00-\u9fa5a-zA-Z0-9_\-.]{2,18}$/;
+      this.patternRule(rule);
+    },
+    passwordRule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.password);
+      rule.pattern = /(?!^\d+$)(?!^[A-Za-z]+$)(?!^[^A-Za-z0-9]+$)^\S{6,20}$/;
+      this.patternRule(rule);
+    },
+    zipcodeRule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.zipcode);
+      rule.pattern = /^\d{6}$/;
+      this.patternRule(rule);
+    },
+    mobileRule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.mobile);
+      rule.pattern = /^0?1\d{10}$/;
+      this.patternRule(rule);
+    },
+    phoneRule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.phone);
+      rule.pattern = /^0[1-9]\d{1,2}-[1-9]\d{6,7}(-\d{1,4})?$/;
+      this.patternRule(rule);
+    },
+    contactRule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.contact);
+      rule.pattern = /^(0[1-9]\d{1,2}-[1-9]\d{6,7}(-\d{1,4})?)|(0?1\d{10})$/;
+      this.patternRule(rule);
+    },
+    faxRule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.fax);
+      rule.pattern = /^0[1-9]\d{1,2}-[1-9]\d{6,7}(-\d{1,4})?$/;
+      this.patternRule(rule);
+    },
+    ipv4Rule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.ipv4);
+      rule.pattern = /^((25[0-5])|(2[0-4]\d)|(1?\d{1,2})\.){3}((25[0-5])|(2[0-4]\d)|(1?\d{1,2}))$/;
+      this.patternRule(rule);
+    },
+    dateRule(rule) {
+      this.isDateRule = true;
+      const _trigger = this.getRuleTrigger(rule, "blur");
+      const _msg = DefMsgs.date;
+
+      const dateType = this.getExtData("type", "date");
+      let valueFormat;
+      switch (dateType) {
+        case "year":
+          valueFormat = "YYYY";
+          break;
+        case "month":
+          valueFormat = "YYYY-MM";
+          break;
+        case "datetime":
+          valueFormat = "YYYY-MM-DD hh:mm:ss";
+          break;
+        default:
+          valueFormat = "YYYY-MM-DD";
+          break;
+      }
+      const rule1 = copy(rule);
+      if (!isEmpty(rule.min) && isNumber(rule.min)) {
+        rule1.min = moment(rule.min).format(valueFormat);
+      }
+      if (!isEmpty(rule.max) && isNumber(rule.max)) {
+        rule1.max = moment(rule.max).format(valueFormat);
+      }
+      rule.message = this.getRuleMessage(rule1, DefMsgs.date);
+      this.addRule(rule);
     },
   },
 };

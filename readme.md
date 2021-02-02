@@ -22,3 +22,28 @@ Vue.use(ElementForm);
 ```
 <element-form></element-form>
 ```
+
+## 4. rules
+```
+{ type: "required", value: true, message: "", trigger:"blur" }
+{ type: "boolean", message: "", trigger:"click" }
+{ type: "enum", enum: ["nan", "nv"], message: "", trigger:"blur" }
+  在 input-radio 和单选的 input-select 中可直接简化为：{ type: "enum", }
+{ type: "email", message: "", trigger:"blur" }
+{ type: "url", message: "", trigger:"blur" }
+{ type: "regexp", message: "", trigger:"blur" }
+{ type: "hex", message: "", trigger:"blur" }
+{ type: "pattern", pattern: '/^\d{2}$/', message: "", trigger:"blur" }
+  或者 { type: "pattern", pattern: "/^\\\d{2}$/", message: "", trigger:"blur" }
+
+
+custom 定义常用
+{ type: "username", message: "", trigger:"blur" }
+{ type: "password", message: "", trigger:"blur" }
+{ type: "zipcode", message: "", trigger:"blur" }
+{ type: "mobile", message: "", trigger:"blur" }
+{ type: "phone", message: "", trigger:"blur" }
+{ type: "contact", message: "", trigger:"blur" }
+{ type: "fax", message: "", trigger:"blur" }
+{ type: "ipv4", message: "", trigger:"blur" }
+```
