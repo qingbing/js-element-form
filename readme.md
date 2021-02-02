@@ -35,6 +35,7 @@ Vue.use(ElementForm);
 { type: "hex", message: "", trigger:"blur" }
 { type: "pattern", pattern: '/^\d{2}$/', message: "", trigger:"blur" }
   或者 { type: "pattern", pattern: "/^\\\d{2}$/", message: "", trigger:"blur" }
+{ type: "date", min: 1612108800000, max: 1614528000000, message: "", } 只能用在datetime-picker中，且指定 valueFormat 必须为 timestamp
 
 
 custom 定义常用
