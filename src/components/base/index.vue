@@ -404,13 +404,28 @@ export default {
       rule.validator = this.customRuleCallback;
       this.addRule(rule);
     },
-    customRuleCallback(rule, val, cb) {
+    async customRuleCallback(rule, val, cb) {
+      // 配置定义的参数
       const params = isObject(rule.params) ? copy(rule.params) : {};
+      // 配置字段参数
       if (isArray(rule.fields)) {
-        each(rule.fields, (value) => {});
+        each(rule.fields, (field) => {
+          params[field] = this.formData[field];
+        });
       }
-      console.log(rule, val);
-      console.log("========");
+      // 表单输入信息
+      params.keyword = val;
+      if ("callback" === rule.type) {
+        const res = rule.callback(params, this.formData);
+        if (isString(res)) {
+          cb(new Error(res));
+        } else {
+          cb();
+        }
+      } else if ("ajax" === rule.type) {
+      } else {
+        cb();
+      }
     },
   },
 };
