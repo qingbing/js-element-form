@@ -10,9 +10,29 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid">
+  <el-form-item
+    v-else-if="!isNumberRule"
+    :label="item.label"
+    :prop="field"
+    :key="uniqid"
+  >
     <el-input
       v-model="formData[field]"
+      :placeholder="placeholder"
+      :showPassword="showPassword"
+      :prefixIcon="prefixIcon"
+      :suffixIcon="suffixIcon"
+      :clearable="clearable"
+      :maxlength="maxlength"
+      :minlength="minlength"
+      :showWordLimit="showWordLimit"
+    ></el-input>
+  </el-form-item>
+  <!-- 数字填写 -->
+  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid">
+    <el-input
+      type="number"
+      v-model.number="formData[field]"
       :placeholder="placeholder"
       :showPassword="showPassword"
       :prefixIcon="prefixIcon"
@@ -47,6 +67,10 @@ export default {
       this.maxlength = this.getExtData("maxlength", null);
       this.minlength = this.getExtData("minlength", null);
       this.showWordLimit = this.getExtData("showWordLimit", true);
+
+      if (!this.isNumberRule) {
+        this.isNumberRule = false;
+      }
     }
   },
 };

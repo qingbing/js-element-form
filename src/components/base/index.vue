@@ -104,7 +104,6 @@ export default {
     if (!isArray(this.item.rules)) {
       return;
     }
-
     // 规则处理
     each(this.item.rules, (idx, rule) => {
       if (!isUndefined(rule.type)) {
@@ -333,20 +332,53 @@ export default {
     },
     stringRule(rule) {
       if (isEmpty(rule.max)) {
-        const maxLength = this.getExtData("maxlength");
-        if (!isEmpty(maxLength) && maxLength > 0) {
-          rule.max = maxLength;
+        // 取 input-text 的配置
+        const max = this.getExtData("maxlength");
+        if (!isEmpty(max) && max > 0) {
+          rule.max = max;
         }
       }
       if (isEmpty(rule.min)) {
-        const minLength = this.getExtData("minlength");
-        if (!isEmpty(minLength) && minLength > 0) {
-          rule.min = minLength;
+        // 取 input-text 的配置
+        const min = this.getExtData("minlength");
+        if (!isEmpty(min) && min > 0) {
+          rule.min = min;
         }
       }
       rule.message = this.getRuleMessage(rule, DefMsgs.string);
       this.addRule(rule);
     },
+    numberRule(rule, dataType) {
+      this.isNumberRule = true;
+      if (isEmpty(dataType)) {
+        dataType = "number";
+      }
+      if (isEmpty(rule.max)) {
+        // 取 input-number 的配置
+        const max = this.getExtData("max");
+        if (!isEmpty(max)) {
+          rule.max = max;
+        }
+      }
+      if (isEmpty(rule.min)) {
+        // 取 input-number 的配置
+        const min = this.getExtData("min");
+        if (!isEmpty(min)) {
+          rule.min = min;
+        }
+      }
+      rule.message = this.getRuleMessage(rule, DefMsgs[dataType]);
+      this.addRule(rule);
+    },
+    integerRule(rule) {
+      this.numberRule(rule, "integer");
+    },
+    floatRule(rule) {
+      this.numberRule(rule, "float");
+    },
+    // arrayRule(rule) {
+    //   this.numberRule(rule, "float");
+    // },
   },
 };
 </script>

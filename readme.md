@@ -37,7 +37,14 @@ Vue.use(ElementForm);
   或者 { type: "pattern", pattern: "/^\\\d{2}$/", message: "", trigger:"blur" }
 { type: "date", min: 1612108800000, max: 1614528000000, message: "", } 只能用在datetime-picker中，且指定 valueFormat 必须为 timestamp
   或者 { type: "date", min: "2021-02-01", max: "2021-03-01", message: "", }
+// 字符串长度可以从 exts 的 minlength、maxlength 中获取
 { type: "string", min: 2, max: 4, }
+// 数字可以从 exts 的 min、max 中获取
+{ type: "number", min: 2, max: 4, }
+// 数字可以从 exts 的 min、max 中获取
+{ type: "integer", min: 2, max: 4, }
+// 数字可以从 exts 的 min、max 中获取
+{ type: "float", min: 2, max: 4, }
 
 custom 定义常用
 { type: "username", message: "", trigger:"blur" }

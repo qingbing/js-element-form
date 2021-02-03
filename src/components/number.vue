@@ -13,6 +13,8 @@
   <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
     <el-input-number
       v-model="formData[field]"
+      :min="min"
+      :max="max"
       :step="step"
       :stepStrictly="stepStrictly"
       :precision="precision"
@@ -29,6 +31,8 @@ export default {
   extends: Base,
   created() {
     if (!this.isText) {
+      this.min = this.getExtData("min");
+      this.max = this.getExtData("max");
       this.step = this.getExtData("step", 1);
       this.stepStrictly = this.getExtData("stepStrictly", false);
       this.precision = this.getExtData("precision", 0);

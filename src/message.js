@@ -30,17 +30,17 @@ const messages = {
   },
   float: {
     base: "{label} 不是有效的浮点数",
-    len: "{label} 必须等于 {len}",
-    min: "{label} 必须大于 {min}",
-    max: "{label} 必须小于 {max}",
-    range: "{label} 必须介于 {min} 和 {max} 之间"
+    len: "{label} 必须等于 {len} 的浮点数",
+    min: "{label} 必须大于 {min} 的浮点数",
+    max: "{label} 必须小于 {max} 的浮点数",
+    range: "{label} 必须介于 {min} 和 {max} 之间的浮点数"
   },
   integer: {
     base: "{label} 不是有效的整数",
-    len: "{label} 必须等于 {len}",
-    min: "{label} 必须大于 {min}",
-    max: "{label} 必须小于 {max}",
-    range: "{label} 必须介于 {min} 和 {max} 之间"
+    len: "{label} 必须等于 {len} 的整数",
+    min: "{label} 必须大于 {min} 的整数",
+    max: "{label} 必须小于 {max} 的整数",
+    range: "{label} 必须介于 {min} 和 {max} 之间的整数"
   },
   string: {
     base: "{label} 不是有效的字符串",
