@@ -53,7 +53,7 @@ export default {
         }
         let key = selected.shift();
         let inOption = false;
-        each(options, (idx, option) => {
+        each(options, (option) => {
           if (option.value != key) {
             return;
           }

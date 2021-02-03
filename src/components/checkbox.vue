@@ -46,7 +46,7 @@ export default {
     }
     if (this.isText) {
       const ts = [];
-      each(this.formData[this.field], (idx, select) => {
+      each(this.formData[this.field], (select) => {
         ts.push(this.item.exts.options[select]);
       });
       this.viewText = ts.join(",");

@@ -105,7 +105,7 @@ export default {
       return;
     }
     // 规则处理
-    each(this.item.rules, (idx, rule) => {
+    each(this.item.rules, (rule) => {
       if (!isUndefined(rule.type)) {
         rule.label = this.item.label;
         const methodName = rule.type + "Rule";
@@ -208,7 +208,7 @@ export default {
           rule.enum = copy(ops);
         } else {
           rule.enum = [];
-          each(ops, (key, val) => {
+          each(ops, (_, key) => {
             rule.enum.push(key);
           });
         }
@@ -397,6 +397,20 @@ export default {
       rule.trigger = "change";
       rule.message = this.getRuleMessage(rule, DefMsgs.array);
       this.addRule(rule);
+    },
+    // 回调验证
+    callbackRule(rule) {
+      rule.trigger = this.getRuleTrigger(rule, "blur");
+      rule.validator = this.customRuleCallback;
+      this.addRule(rule);
+    },
+    customRuleCallback(rule, val, cb) {
+      const params = isObject(rule.params) ? copy(rule.params) : {};
+      if (isArray(rule.fields)) {
+        each(rule.fields, (value) => {});
+      }
+      console.log(rule, val);
+      console.log("========");
     },
   },
 };

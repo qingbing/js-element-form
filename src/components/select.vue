@@ -95,7 +95,7 @@ export default {
       }
       const options = this.item.exts.options;
       const ts = [];
-      each(selected, (idx, select) => {
+      each(selected, (select) => {
         ts.push(options[select]);
       });
       this.viewText = ts.join(",");
@@ -169,7 +169,7 @@ export default {
     // 解析传递的数据成 options
     releaseOptions(ops) {
       const options = [];
-      each(ops, (key, op) => {
+      each(ops, (op, key) => {
         options.push({
           label: op,
           value: key,

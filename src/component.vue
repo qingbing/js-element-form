@@ -103,18 +103,18 @@ export default {
   created() {
     // 将数组形式的字段信息转换成field对象
     const newItems = {};
-    each(this.items, (idx, item) => {
+    each(this.items, (item) => {
       newItems[item.field] = item;
     });
     this.newItems = newItems;
     // 计算真正显示的字段信息
     const newViewFields = [];
     if (0 === this.viewFields.length) {
-      each(this.newItems, (idx, item) => {
+      each(this.newItems, (item) => {
         newViewFields.push(item.field);
       });
     } else {
-      each(this.viewFields, (idx, field) => {
+      each(this.viewFields, (field) => {
         if (this.newItems[field]) {
           newViewFields.push(field);
         }
@@ -125,7 +125,7 @@ export default {
   data() {
     // 从本组件中获取定义支持的子组件
     const componentIds = [];
-    each(this.$options.components, (key, _) => {
+    each(this.$options.components, (_, key) => {
       if ("ElementForm" !== key) {
         componentIds.push(key);
       }
