@@ -35,6 +35,11 @@ import {
 } from "@qingbing/helper";
 import DefMsgs from "./../../message";
 import moment from "moment";
+
+function strtotime(str) {
+  return parseFloat(moment(str).format("x"));
+}
+
 // 导出
 export default {
   props: {
@@ -283,7 +288,12 @@ export default {
     },
     dateRule(rule) {
       this.isDateRule = true;
-      const _trigger = this.getRuleTrigger(rule, "blur");
+      if (
+        !isEmpty(this.formData[this.field]) &&
+        !isNumber(this.formData[this.field])
+      ) {
+        this.formData[this.field] = strtotime(this.formData[this.field]);
+      }
       const _msg = DefMsgs.date;
 
       const dateType = this.getExtData("type", "date");
@@ -303,13 +313,37 @@ export default {
           break;
       }
       const rule1 = copy(rule);
-      if (!isEmpty(rule.min) && isNumber(rule.min)) {
-        rule1.min = moment(rule.min).format(valueFormat);
+      if (!isEmpty(rule.min)) {
+        if (isNumber(rule.min)) {
+          rule1.min = moment(rule.min).format(valueFormat);
+        } else {
+          rule.min = strtotime(rule.min);
+        }
       }
-      if (!isEmpty(rule.max) && isNumber(rule.max)) {
-        rule1.max = moment(rule.max).format(valueFormat);
+      if (!isEmpty(rule.max)) {
+        if (isNumber(rule.max)) {
+          rule1.max = moment(rule.max).format(valueFormat);
+        } else {
+          rule.max = strtotime(rule.max);
+        }
       }
       rule.message = this.getRuleMessage(rule1, DefMsgs.date);
+      rule.trigger = this.getRuleTrigger(rule, "blur");
+      this.addRule(rule);
+    },
+    stringRule(rule) {
+      if (isEmpty(rule.max)) {
+        const maxLength = this.getExtData("maxlength");
+        if (!isEmpty(maxLength) && maxLength > 0) {
+          rule.max = maxLength;
+        }
+      }
+      if (isEmpty(rule.min)) {
+        const minLength = this.getExtData("minlength");
+        if (!isEmpty(minLength) && minLength > 0) {
+          rule.min = minLength;
+        }
+      }
       this.addRule(rule);
     },
   },
