@@ -344,6 +344,7 @@ export default {
           rule.min = minLength;
         }
       }
+      rule.message = this.getRuleMessage(rule, DefMsgs.string);
       this.addRule(rule);
     },
   },
