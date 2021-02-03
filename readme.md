@@ -45,6 +45,8 @@ Vue.use(ElementForm);
 { type: "integer", min: 2, max: 4, }
 // 数字可以从 exts 的 min、max 中获取
 { type: "float", min: 2, max: 4, }
+// 数字可以从 exts 的 min、max 中获取
+{ type: "array", min: 2, max: 4, }
 
 custom 定义常用
 { type: "username", message: "", trigger:"blur" }
