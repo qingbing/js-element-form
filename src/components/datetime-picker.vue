@@ -40,6 +40,11 @@ import { isUndefined, sprintf } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,
+  data() {
+    return {
+      trigger: "change",
+    };
+  },
   created() {
     if (!this.isText) {
       // 日期类型

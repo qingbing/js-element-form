@@ -1,6 +1,6 @@
 // 导入组件
 import CComponent from "./component.vue";
-import { isObject, isFunction } from "@qingbing/helper";
+import { isObject, isFunction, isDev } from "@qingbing/helper";
 // 定义组件安装
 const Component = {
   install(Vue, ops) {

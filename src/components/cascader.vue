@@ -29,6 +29,11 @@ import { copy, isArray, isUndefined, each } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,
+  data() {
+    return {
+      trigger: "change",
+    };
+  },
   created() {
     this.options = this.getExtData("options", []);
     if (this.isText) {

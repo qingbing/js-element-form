@@ -25,6 +25,11 @@ import Base from "./base";
 // 导出
 export default {
   extends: Base,
+  data() {
+    return {
+      trigger: "change",
+    };
+  },
   created() {
     if (!this.isText) {
       this.predefineColors = this.getExtData("predefineColors", undefined);

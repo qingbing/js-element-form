@@ -78,6 +78,7 @@ export default {
   extends: Base,
   data() {
     return {
+      trigger: "change",
       options: [],
     };
   },

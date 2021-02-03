@@ -168,6 +168,9 @@ export default {
       if (!isEmpty(defEvent)) {
         return defEvent;
       }
+      if (this.trigger) {
+        return this.trigger;
+      }
       return "blur";
     },
     // 常规规则添加
@@ -376,9 +379,25 @@ export default {
     floatRule(rule) {
       this.numberRule(rule, "float");
     },
-    // arrayRule(rule) {
-    //   this.numberRule(rule, "float");
-    // },
+    arrayRule(rule) {
+      if (isEmpty(rule.max)) {
+        // 取 input-number 的配置
+        const max = this.getExtData("max");
+        if (!isEmpty(max)) {
+          rule.max = max;
+        }
+      }
+      if (isEmpty(rule.min)) {
+        // 取 input-number 的配置
+        const min = this.getExtData("min");
+        if (!isEmpty(min)) {
+          rule.min = min;
+        }
+      }
+      rule.trigger = "change";
+      rule.message = this.getRuleMessage(rule, DefMsgs.array);
+      this.addRule(rule);
+    },
   },
 };
 </script>

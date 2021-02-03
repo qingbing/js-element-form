@@ -10,7 +10,13 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
+  <el-form-item
+    v-else
+    :label="item.label"
+    :prop="field"
+    :key="uniqid"
+    class="text-left"
+  >
     <el-checkbox-group v-model="formData[field]" :min="min" :max="max">
       <template v-for="(val, key) in item.exts.options">
         <el-checkbox :label="key" :key="uniqid + key" border>{{
@@ -29,6 +35,11 @@ import { isArray, each } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,
+  data() {
+    return {
+      trigger: "change",
+    };
+  },
   created() {
     if (!isArray(this.formData[this.field])) {
       this.formData[this.field] = [];
@@ -40,8 +51,8 @@ export default {
       });
       this.viewText = ts.join(",");
     } else {
-      this.min = this.getExtData("min", null);
-      this.max = this.getExtData("max", null);
+      this.min = this.getExtData("min");
+      this.max = this.getExtData("max");
     }
   },
 };
