@@ -398,11 +398,29 @@ export default {
       rule.message = this.getRuleMessage(rule, DefMsgs.array);
       this.addRule(rule);
     },
+    compareRule(rule) {
+      if (isEmpty(rule.compareField)) {
+        throw new Error(
+          "Element-Form 的 compare 验证需要指定一个存在的 compareField 字段"
+        );
+      }
+      rule.message = this.getRuleMessage(rule, DefMsgs.compare);
+      rule.callback = (data, formData) => {
+        if (data.keyword != formData[rule.compareField]) {
+          return rule.message;
+        }
+      };
+      this.callbackRule(rule);
+    },
     // 回调验证
     callbackRule(rule) {
       rule.trigger = this.getRuleTrigger(rule, "blur");
       rule.validator = this.customRuleCallback;
       this.addRule(rule);
+    },
+    // url回调验证
+    ajaxRule(rule) {
+      this.callbackRule(rule);
     },
     async customRuleCallback(rule, val, cb) {
       // 配置定义的参数
@@ -415,17 +433,24 @@ export default {
       }
       // 表单输入信息
       params.keyword = val;
-      if ("callback" === rule.type) {
-        const res = rule.callback(params, this.formData);
+      if ("callback" === rule.type || "compare" === rule.type) {
+        const res = await rule.callback(params, this.formData);
         if (isString(res)) {
-          cb(new Error(res));
-        } else {
-          cb();
+          return cb(new Error(res));
         }
-      } else if ("ajax" === rule.type) {
-      } else {
-        cb();
       }
+      if ("ajax" === rule.type) {
+        // ajax 请求远端数据
+        const res = await this.ajaxMethod(
+          rule.url,
+          params,
+          isEmpty(rule.method) ? "post" : rule.method
+        );
+        if (isString(res)) {
+          return cb(new Error(res));
+        }
+      }
+      return cb();
     },
   },
 };

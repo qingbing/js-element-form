@@ -64,7 +64,8 @@ const messages = {
   phone: "{label} 不是有效的座机号码",
   contact: "{label} 不是有效的联系方式",
   fax: "{label} 不是有效的传真号码",
-  ipv4: "{label} 不是有效的IPV4"
+  ipv4: "{label} 不是有效的IPV4",
+  compare: "{label} 确认信息不一致",
 };
 
 export default messages;

@@ -47,6 +47,12 @@ Vue.use(ElementForm);
 { type: "float", min: 2, max: 4, }
 // 数字可以从 exts 的 min、max 中获取
 { type: "array", min: 2, max: 4, }
+// ajax 的url验证，需要 ajaxMethod 函数在不通过时返回字符串，只要返回时字符串，就认为不通过
+{ type: "ajax", url: '/rule-ajax', fields: ["select2",], params: { id: 55 }, method: 'get' }
+// callback 的函数式验证，如果验证不通过，返回一个字符串即可
+{type: "callback", fields: ["select2",], params: { id: 55 }, callback(data, formData) { return "Error. There is something wrong!";}}
+// compare 对比验证
+{ type: "compare", compareField: "password-text", message: "密码确认不正确" }
 
 custom 定义常用
 { type: "username", message: "", trigger:"blur" }
