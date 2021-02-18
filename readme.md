@@ -1,6 +1,10 @@
 # 封装 vue-element-ui 的组件
 对 vue-element-ui 进行封装表单组件
 
+### ====== 版本说明 ======
+- 1.0.1 : 基础表单选项
+- 1.0.2 : 增加json-editor
+
 ## 1. 安装
 ```
 npm install @qingbing/element-form
@@ -82,3 +86,4 @@ custom 定义常用
 - @json-change: json编辑器内容改变时触发
 - @json-save: 点击保存时触发
 - @has-error: 发生错误时触发
+
