@@ -40,6 +40,7 @@ import ComponentDatetimePicker from "./components/datetime-picker";
 import ComponentRate from "./components/rate";
 import ComponentColorPicker from "./components/color";
 import ComponentUploader from "./components/uploader";
+import ComponentJsonEditor from "./components/json-editor";
 
 /**
  * ajax 的函数在 use 后面自定义
@@ -152,6 +153,7 @@ export default {
     "time-picker": ComponentTimePicker,
     "datetime-picker": ComponentDatetimePicker,
     "auto-complete": ComponentAutocomplete,
+    "json-editor": ComponentJsonEditor,
   },
   methods: {
     inSubComponent(componentId) {

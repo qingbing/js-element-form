@@ -2,6 +2,9 @@
   "name": "@qingbing/element-form",
   "version": "1.0.1",
   "description": "封装 vue-element-ui 的表单组件",
+  "home": "https://github.com/qingbing/js-element-form",
+  "author": "https://github.com/qingbing",
+  "license": "ISC",
   "main": "src/index.js",
   "scripts": {
     "pack-version": "webpack -v",
@@ -15,8 +18,6 @@
     "element-ui",
     "form"
   ],
-  "author": "https://github.com/qingbing",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
@@ -32,6 +33,7 @@
   "dependencies": {
     "@qingbing/helper": "^1.0.3",
     "element-ui": "^2.14.1",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "vue-json-editor": "^1.4.3"
   }
 }
