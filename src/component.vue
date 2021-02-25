@@ -41,6 +41,7 @@ import ComponentRate from "./components/rate";
 import ComponentColorPicker from "./components/color";
 import ComponentUploader from "./components/uploader";
 import ComponentJsonEditor from "./components/json-editor";
+import ComponentVueEditor from "./components/vue-editor";
 
 /**
  * ajax 的函数在 use 后面自定义
@@ -154,6 +155,7 @@ export default {
     "datetime-picker": ComponentDatetimePicker,
     "auto-complete": ComponentAutocomplete,
     "json-editor": ComponentJsonEditor,
+    "vue-editor": ComponentVueEditor,
   },
   methods: {
     inSubComponent(componentId) {
