@@ -6,7 +6,6 @@
       v-model="formData[field]"
       :id="eleId"
       :editor-toolbar="editorToolbar"
-      v-light
     ></vue-editor>
 
     <!-- 视图显示 -->
@@ -29,16 +28,24 @@ export default {
     light: {
       // 被绑定元素插入父节点时调用
       inserted: function (el) {
-        let blocks = el.querySelectorAll("pre code");
-        for (let i = 0; i < blocks.length; i++) {
-          hljs.highlightBlock(blocks[i]);
+        let targets = el.querySelectorAll("pre code");
+        for (let i = 0; i < targets.length; i++) {
+          targets[i].innerHTML =
+            "<ul><li>" +
+            targets[i].innerHTML.replace(/\n/g, "\n</li><li>") +
+            "\n</li></ul>";
+          hljs.highlightBlock(targets[i]);
         }
       },
       // 指令所在组件的 VNode 及其子 VNode 全部更新后调用
       componentUpdated: function (el) {
-        let blocks = el.querySelectorAll("pre code");
-        for (let i = 0; i < blocks.length; i++) {
-          hljs.highlightBlock(blocks[i]);
+        let targets = el.querySelectorAll("pre code");
+        for (let i = 0; i < targets.length; i++) {
+          targets[i].innerHTML =
+            "<ul><li>" +
+            targets[i].innerHTML.replace(/\n/g, "\n</li><li>") +
+            "\n</li></ul>";
+          hljs.highlightBlock(targets[i]);
         }
       },
     },
@@ -85,5 +92,24 @@ export default {
 /* 将菜单项左对齐 */
 .quillWrapper .ql-snow.ql-toolbar {
   text-align: left;
+}
+/* code 行号样式 */
+.hljs ul {
+  list-style: decimal;
+  margin: 0 0 0 40px !important;
+  padding: 0;
+}
+.hljs li {
+  list-style: decimal-leading-zero;
+  border-left: 1px solid #111 !important;
+  padding: 2px 5px !important;
+  margin: 0 !important;
+  line-height: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.hljs li:nth-of-type(even) {
+  background-color: rgba(255, 255, 255, 0.015);
+  color: inherit;
 }
 </style>
