@@ -1,6 +1,6 @@
 {
   "name": "@qingbing/element-form",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "封装 vue-element-ui 的表单组件",
   "home": "https://github.com/qingbing/js-element-form",
   "author": "https://github.com/qingbing",

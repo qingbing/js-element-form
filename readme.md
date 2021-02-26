@@ -5,6 +5,7 @@
 - 1.0.1 : 基础表单选项
 - 1.0.2 : 增加json-editor
 - 1.0.4 : 增加quill-editor(vue2-editor)
+- 1.0.5 : vue2-editor 增加编辑器 id 属性扩展
 
 ## 1. 安装
 ```

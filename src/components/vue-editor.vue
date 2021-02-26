@@ -3,8 +3,8 @@
     <!-- 编辑器 -->
     <vue-editor
       v-if="!isText"
-      :id="uniqueId()"
       v-model="formData[field]"
+      :id="eleId"
       :editor-toolbar="editorToolbar"
       v-light
     ></vue-editor>
@@ -72,15 +72,11 @@ export default {
       editorToolbar.push("link");
       editorToolbar.push("clean");
       this.editorToolbar = editorToolbar;
+      this.eleId = this.getExtData("id", uniqid());
     }
   },
   components: {
     VueEditor,
-  },
-  methods: {
-    uniqueId() {
-      return uniqid();
-    },
   },
 };
 </script>
