@@ -25,15 +25,12 @@
       :filterable="filterable"
     >
       <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
+        v-for="(val, key) in item.exts.options"
+        :key="key"
+        :label="val"
+        :value="key"
       >
       </el-option>
-      <!-- <template v-for="(val, key) in options">
-        <el-option :label="val" :key="uniqid + key" :value="key"> </el-option>
-      </template> -->
     </el-select>
   </el-form-item>
 
@@ -50,15 +47,12 @@
       :remote-method="remoteMethod"
     >
       <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
+        v-for="(val, key) in item.exts.options"
+        :key="key"
+        :label="val"
+        :value="key"
       >
       </el-option>
-      <!-- <template v-for="(val, key) in options">
-        <el-option :label="val" :key="uniqid + key" :value="key"> </el-option>
-      </template> -->
     </el-select>
   </el-form-item>
 </template>
@@ -79,7 +73,6 @@ export default {
   data() {
     return {
       trigger: "change",
-      options: [],
     };
   },
   created() {
@@ -109,7 +102,7 @@ export default {
       this.clearable = this.getExtData("clearable", true);
       this.multiple = this.getExtData("multiple", false);
       // 默认选项
-      this.options = this.releaseOptions(this.getExtData("options", {}));
+      // this.options = this.getExtData("options", {});
 
       const callback = this.getExtData("callback");
       const fetchUrl = this.getExtData("fetchUrl");
@@ -153,29 +146,18 @@ export default {
       }
       this.loading = true;
       if ("function" == this.remoteType) {
-        this.options = this.releaseOptions(await this.userCallback(keyword));
+        this.item.exts.options = await this.userCallback(keyword);
       } else {
         // 增加查询的输入框信息
         this.fetchData.keyword = keyword;
         // 获取远端数据
-        this.options = await this.ajaxMethod(
+        this.item.exts.options = await this.ajaxMethod(
           this.fetchUrl,
           this.fetchData,
           this.fetchMethod
         );
       }
       this.loading = false;
-    },
-    // 解析传递的数据成 options
-    releaseOptions(ops) {
-      const options = [];
-      each(ops, (op, key) => {
-        options.push({
-          label: op,
-          value: key,
-        });
-      });
-      return options;
     },
   },
 };

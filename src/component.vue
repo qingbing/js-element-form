@@ -71,7 +71,7 @@ export default {
     },
     // 字段信息
     items: {
-      type: Array,
+      type: Object,
       required: true,
     },
     // 表单数据
