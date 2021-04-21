@@ -248,6 +248,16 @@ export default {
         trigger: this.getRuleTrigger(rule),
       });
     },
+    idCardRule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.idCard);
+      rule.pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+      this.patternRule(rule);
+    },
+    qqRule(rule) {
+      rule.message = this.getRuleMessage(rule, DefMsgs.qq);
+      rule.pattern = /^[1-9]\d{4,10}$/;
+      this.patternRule(rule);
+    },
     usernameRule(rule) {
       rule.message = this.getRuleMessage(rule, DefMsgs.username);
       rule.pattern = /^[\u4e00-\u9fa5a-zA-Z0-9_\-.]{2,18}$/;
@@ -289,49 +299,9 @@ export default {
       this.patternRule(rule);
     },
     dateRule(rule) {
-      this.isDateRule = true;
-      if (
-        !isEmpty(this.formData[this.field]) &&
-        !isNumber(this.formData[this.field])
-      ) {
-        this.formData[this.field] = strtotime(this.formData[this.field]);
-      }
-      const _msg = DefMsgs.date;
-
-      const dateType = this.getExtData("type", "date");
-      let valueFormat;
-      switch (dateType) {
-        case "year":
-          valueFormat = "YYYY";
-          break;
-        case "month":
-          valueFormat = "YYYY-MM";
-          break;
-        case "datetime":
-          valueFormat = "YYYY-MM-DD hh:mm:ss";
-          break;
-        default:
-          valueFormat = "YYYY-MM-DD";
-          break;
-      }
-      const rule1 = copy(rule);
-      if (!isEmpty(rule.min)) {
-        if (isNumber(rule.min)) {
-          rule1.min = moment(rule.min).format(valueFormat);
-        } else {
-          rule.min = strtotime(rule.min);
-        }
-      }
-      if (!isEmpty(rule.max)) {
-        if (isNumber(rule.max)) {
-          rule1.max = moment(rule.max).format(valueFormat);
-        } else {
-          rule.max = strtotime(rule.max);
-        }
-      }
-      rule.message = this.getRuleMessage(rule1, DefMsgs.date);
-      rule.trigger = this.getRuleTrigger(rule, "blur");
-      this.addRule(rule);
+      rule.message = this.getRuleMessage(rule, DefMsgs.date);
+      rule.pattern = /^(\d{2})?\d{2}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?$/;
+      this.patternRule(rule);
     },
     stringRule(rule) {
       if (isEmpty(rule.max)) {

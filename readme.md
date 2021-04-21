@@ -9,6 +9,11 @@
 - 1.0.6 : vue2-editor 增加编辑器 code 行号显示
 - 1.0.7 : 去除不需要的 isDev 代码
 - 1.0.8 : 将 element-form 的 items 传递用 object 来代替 array
+- 1.0.9
+  - 添加 idCard 身份证验证规则
+  - 添加 qq 规则验证
+  - 完善 time-picker 组件
+  - 完善 datetime-picker 组件
 
 ## 1. 安装
 ```

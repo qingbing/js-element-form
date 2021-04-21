@@ -18,16 +18,44 @@
     class="text-left"
   >
     <el-date-picker
-      v-model="formData[field]"
-      :placeholder="placeholder"
-      :rangeSeparator="rangeSeparator"
-      :startPlaceholder="startPlaceholder"
-      :endPlaceholder="endPlaceholder"
-      :type="type"
-      :format="format"
-      :valueFormat="valueFormat"
-      :pickerOptions="pickerOptions"
+      v-if="isRange"
       :ref="field"
+      v-model="formData[field]"
+      :type="type"
+      :readonly="readonly"
+      :disabled="disabled"
+      :editable="editable"
+      :clearable="clearable"
+      :align="align"
+      :prefix-icon="prefixIcon"
+      :clear-icon="clearIcon"
+      :validate-event="validateEvent"
+      :placeholder="placeholder"
+      :picker-options="pickerOptions"
+      :value-format="valueFormat"
+      :format="format"
+      :range-separator="rangeSeparator"
+      :start-placeholder="startPlaceholder"
+      :end-placeholder="endPlaceholder"
+    >
+    </el-date-picker>
+    <el-date-picker
+      v-else
+      :ref="field"
+      v-model="formData[field]"
+      :type="type"
+      :readonly="readonly"
+      :disabled="disabled"
+      :editable="editable"
+      :clearable="clearable"
+      :align="align"
+      :prefix-icon="prefixIcon"
+      :clear-icon="clearIcon"
+      :validate-event="validateEvent"
+      :placeholder="placeholder"
+      :picker-options="pickerOptions"
+      :value-format="valueFormat"
+      :format="format"
     >
     </el-date-picker>
   </el-form-item>
@@ -36,7 +64,7 @@
 <script>
 // 导入
 import Base from "./base";
-import { isUndefined, sprintf } from "@qingbing/helper";
+import { isUndefined } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,
@@ -49,151 +77,113 @@ export default {
     if (!this.isText) {
       // 日期类型
       this.type = this.getExtData("type", "date");
-      let pickerOptions = {};
-      // 提示信息
-      let placeholder = this.getExtData("placeholder");
-      let format = this.getExtData("format");
-      let valueFormat = this.getExtData("valueFormat");
 
-      let rangeSeparator = this.getExtData("rangeSeparator", "至");
+      this.readonly = this.getExtData("readonly", false);
+      this.disabled = this.getExtData("disabled", false);
+      this.editable = this.getExtData("editable", true);
+      this.clearable = this.getExtData("clearable", true);
+      this.align = this.getExtData("align", "left");
+      this.prefixIcon = this.getExtData("prefixIcon", "el-icon-date");
+      this.clearIcon = this.getExtData("clearIcon", "el-icon-circle-close");
+      this.validateEvent = this.getExtData("validateEvent", true);
+      // 区别字段
+      let rangeSeparator = this.getExtData("rangeSeparator");
       let startPlaceholder = this.getExtData("startPlaceholder");
       let endPlaceholder = this.getExtData("endPlaceholder");
+
+      let placeholder = this.getExtData("placeholder");
+      let valueFormat = this.getExtData("valueFormat");
+      let format = this.getExtData("format");
+      this.isRange = false;
+
       switch (this.type) {
-        case "monthrange":
-          if (isUndefined(placeholder)) {
-            placeholder = "请选择月";
-          }
-          if (isUndefined(valueFormat)) {
-            valueFormat = "yyyy-MM";
-          }
-          if (isUndefined(format)) {
-            format = valueFormat;
-          }
-          if (isUndefined(startPlaceholder)) {
-            startPlaceholder = "开始月份";
-          }
-          if (isUndefined(endPlaceholder)) {
-            endPlaceholder = "结束月份";
-          }
-          break;
         case "daterange":
-          if (isUndefined(placeholder)) {
-            placeholder = "请选择日期";
-          }
-          if (isUndefined(valueFormat)) {
-            valueFormat = "yyyy-MM-dd";
-          }
-          if (isUndefined(format)) {
-            format = valueFormat;
-          }
-          if (isUndefined(startPlaceholder)) {
-            startPlaceholder = "开始日期";
-          }
-          if (isUndefined(endPlaceholder)) {
-            endPlaceholder = "结束日期";
-          }
-          break;
-        case "datetimerange":
-          if (isUndefined(placeholder)) {
-            placeholder = "请选择时间";
-          }
-          if (isUndefined(valueFormat)) {
-            valueFormat = "yyyy-MM-dd HH:mm:ss";
-          }
-          if (isUndefined(format)) {
-            format = valueFormat;
-          }
-          if (isUndefined(startPlaceholder)) {
-            startPlaceholder = "开始时间";
-          }
-          if (isUndefined(endPlaceholder)) {
-            endPlaceholder = "结束时间";
-          }
-          break;
-        case "year":
-          if (isUndefined(placeholder)) {
-            placeholder = "请选择年";
-          }
-          if (isUndefined(valueFormat)) {
-            valueFormat = "yyyy";
-          }
-          if (isUndefined(format)) {
-            format = valueFormat;
-          }
-          break;
-        case "week":
-          if (isUndefined(placeholder)) {
-            placeholder = "请选择周";
-          }
-          if (isUndefined(valueFormat)) {
-            valueFormat = "yyyy-MM-dd";
-          }
-          if (isUndefined(format)) {
-            format = "yyyy年第 WW 周";
-          }
+          this.isRange = true;
+          isUndefined(rangeSeparator) && (rangeSeparator = "-");
+          isUndefined(placeholder) && (placeholder = "请选择日期");
+          isUndefined(startPlaceholder) &&
+            (startPlaceholder = "请选择开始日期");
+          isUndefined(endPlaceholder) && (endPlaceholder = "请选择结束日期");
+
+          isUndefined(valueFormat) && (valueFormat = "yyyy-MM-dd");
+          isUndefined(format) && (format = valueFormat);
           break;
         case "month":
-          if (isUndefined(placeholder)) {
-            placeholder = "请选择月";
-          }
-          if (isUndefined(valueFormat)) {
-            valueFormat = "yyyy-MM";
-          }
-          if (isUndefined(format)) {
-            format = valueFormat;
-          }
+          isUndefined(placeholder) && (placeholder = "请选择月");
+
+          isUndefined(valueFormat) && (valueFormat = "yyyy-MM");
+          isUndefined(format) && (format = valueFormat);
+          break;
+        case "monthrange":
+          this.isRange = true;
+          isUndefined(rangeSeparator) && (rangeSeparator = "-");
+          isUndefined(placeholder) && (placeholder = "请选择月份范围");
+          isUndefined(startPlaceholder) &&
+            (startPlaceholder = "请选择开始月份");
+          isUndefined(endPlaceholder) && (endPlaceholder = "请选择结束月份");
+
+          isUndefined(valueFormat) && (valueFormat = "yyyy-MM");
+          isUndefined(format) && (format = valueFormat);
+          break;
+        case "year":
+          isUndefined(placeholder) && (placeholder = "请选择年");
+
+          isUndefined(valueFormat) && (valueFormat = "yyyy");
+          isUndefined(format) && (format = valueFormat);
+          break;
+        case "week":
+          isUndefined(placeholder) && (placeholder = "请选择周");
+
+          isUndefined(valueFormat) && (valueFormat = "yyyy-MM-dd");
+          isUndefined(format) && (format = "yyyywWW");
           break;
         case "datetime":
-          if (isUndefined(placeholder)) {
-            placeholder = "请选择时间";
-          }
-          if (isUndefined(valueFormat)) {
-            valueFormat = "yyyy-MM-dd HH:mm:ss";
-          }
-          if (isUndefined(format)) {
-            format = valueFormat;
-          }
+          isUndefined(placeholder) && (placeholder = "请选择时间");
+
+          isUndefined(valueFormat) && (valueFormat = "yyyy-MM-dd HH:mm:ss");
+          isUndefined(format) && (format = valueFormat);
           break;
+        case "datetimerange":
+          this.isRange = true;
+          isUndefined(rangeSeparator) && (rangeSeparator = "-");
+          isUndefined(placeholder) && (placeholder = "请选择时间范围");
+          isUndefined(startPlaceholder) &&
+            (startPlaceholder = "请选择开始时间");
+          isUndefined(endPlaceholder) && (endPlaceholder = "请选择结束时间");
+
+          isUndefined(valueFormat) && (valueFormat = "yyyy-MM-dd HH:mm:ss");
+          isUndefined(format) && (format = valueFormat);
+          break;
+        case "dates":
+        case "date":
         default:
-          if (isUndefined(placeholder)) {
-            placeholder = "请选择日期";
-          }
-          if (isUndefined(valueFormat)) {
-            valueFormat = "yyyy-MM-dd";
-          }
-          if (isUndefined(format)) {
-            format = valueFormat;
-          }
-          // date
+          isUndefined(placeholder) && (placeholder = "请选择日期");
+
+          isUndefined(valueFormat) && (valueFormat = "yyyy-MM-dd");
+          isUndefined(format) && (format = valueFormat);
           break;
       }
 
-      this.placeholder = placeholder;
-      this.format = format;
-      if (this.isDateRule && "timestamp" != valueFormat) {
-        // 在 date 规则里，值的格式只能为 timestamp
-        throw new Error(
-          "给 datetime-picker 设置 date 格式时，valueFormat 只能为 timestamp"
-        );
-      }
-      this.valueFormat = valueFormat;
       this.rangeSeparator = rangeSeparator;
       this.startPlaceholder = startPlaceholder;
       this.endPlaceholder = endPlaceholder;
+      this.placeholder = placeholder;
+      this.valueFormat = valueFormat;
+      this.format = format;
 
+      this.pickerOptions = {};
+      this.pickerOptions.firstDayOfWeek = this.getExtData("firstDayOfWeek", 7);
       // 快捷标签
       const shortcuts = this.getExtData("shortcuts", []);
       if (shortcuts.length > 0) {
-        pickerOptions.shortcuts = shortcuts;
+        this.pickerOptions.shortcuts = shortcuts;
       }
-
       const timeSource = this.getExtData("timeSource", "none");
       if (timeSource === "past") {
-        pickerOptions.disabledDate = this.isFuture;
+        this.pickerOptions.disabledDate = this.isFuture;
       } else if (timeSource === "future") {
-        pickerOptions.disabledDate = this.isPast;
+        this.pickerOptions.disabledDate = this.isPast;
       }
-      this.pickerOptions = pickerOptions;
     }
   },
   methods: {

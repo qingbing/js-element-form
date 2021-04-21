@@ -14,13 +14,6 @@ const messages = {
   enum: "{label} 必须是 {enum} 中的一个",
   hex: "{label} 必须输入3或6个[0-9a-f]的十六进制",
 
-  date: {
-    base: "{label} 不是有效的日期对象",
-    len: "{label} 必须是 {len}",
-    min: "{label} 不能早于 {min}",
-    max: "{label} 不能晚于 {max}",
-    range: "{label} 必须介于 {min} 和 {max} 之间"
-  },
   number: {
     base: "{label} 不是有效的数字",
     len: "{label} 必须等于 {len}",
@@ -57,6 +50,9 @@ const messages = {
     range: "{label} 的个数必须介于 {min} 和 {max} 之间"
   },
   // 非原生组件支持的验证规则
+  date: "{label} 不是有效的日期对象",
+  idCard: "{label} 不是有效的身份证号",
+  qq: "{label} 不是有效的QQ号码",
   username: "{label} 不是有效的用户名",
   password: "{label} 必须包含 数字、字母、特殊字符 中至少两种",
   zipcode: "{label} 不是有效的邮政编码",

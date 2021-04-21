@@ -10,35 +10,46 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
-    <el-time-select
-      v-if="pickerType == 'select'"
-      v-model="formData[field]"
-      :placeholder="placeholder"
-      :pickerOptions="pickerOptions"
-    ></el-time-select>
+  <el-form-item
+    v-else
+    :label="item.label"
+    :prop="field"
+    :key="uniqid"
+    class="text-left"
+  >
     <el-time-picker
-      v-else-if="pickerType == 'picker'"
-      v-model="formData[field]"
-      :placeholder="placeholder"
-      :pickerOptions="pickerOptions"
-      :value-format="valueFormat"
-    >
-    </el-time-picker>
-    <el-time-picker
-      v-else-if="pickerType == 'range'"
+      v-if="isRange"
       v-model="formData[field]"
       is-range
       :placeholder="placeholder"
-      :pickerOptions="pickerOptions"
+      :arrow-control="arrowControl"
+      :readonly="readonly"
+      :disabled="disabled"
+      :editable="editable"
+      :clearable="clearable"
       :value-format="valueFormat"
-      :startPlaceholder="startPlaceholder"
-      :endPlaceholder="endPlaceholder"
-      :rangeSeparator="rangeSeparator"
+      :pickerOptions="pickerOptions"
+      :star-placeholder="startPlaceholder"
+      :end-placeholder="endPlaceholder"
+      :range-separator="rangeSeparator"
+    >
+    </el-time-picker>
+    <el-time-picker
+      v-else
+      v-model="formData[field]"
+      :placeholder="placeholder"
+      :arrow-control="arrowControl"
+      :readonly="readonly"
+      :disabled="disabled"
+      :editable="editable"
+      :clearable="clearable"
+      :value-format="valueFormat"
+      :pickerOptions="pickerOptions"
     >
     </el-time-picker>
   </el-form-item>
 </template>
+
 
 <script>
 // 导入
@@ -49,10 +60,8 @@ export default {
   extends: Base,
   created() {
     if (!this.isText) {
-      const isRange = this.getExtData("range");
-      let pickerOptions = {};
-      if (isRange) {
-        this.pickerType = "range";
+      this.isRange = this.getExtData("isRange", false);
+      if (this.isRange) {
         // 提示
         this.placeholder = this.getExtData(
           "placeholder",
@@ -60,43 +69,27 @@ export default {
         );
         this.startPlaceholder = this.getExtData("startPlaceholder", "开始时间");
         this.endPlaceholder = this.getExtData("endPlaceholder", "结束时间");
-        this.rangeSeparator = this.getExtData("rangeSeparator");
+        this.rangeSeparator = this.getExtData("rangeSeparator", "-");
       } else {
         this.placeholder = this.getExtData(
           "placeholder",
           sprintf("请输入 %s", this.item.label)
         );
-        // 默认为 time-picker
-        this.pickerType = "picker";
-        // 固定时间点
-        const step = this.getExtData("step"); // 有被认为是 select
-        if (!isUndefined(step)) {
-          const start = this.getExtData("start", "00:00");
-          const end = this.getExtData("end", "24:00");
-          // time-select
-          this.pickerType = "select";
-          pickerOptions = {
-            start,
-            end,
-            step,
-            minTime: this.getExtData("minTime"),
-            maxTime: this.getExtData("maxTime"),
-          };
-        }
       }
 
-      // time-picker 的相关属性处理
-      if (this.pickerType === "picker" || this.pickerType == "range") {
-        const selectableRange = this.getExtData("selectableRange");
-        if (!isUndefined(selectableRange)) {
-          pickerOptions.selectableRange = selectableRange;
-        }
-        this.valueFormat = pickerOptions.format = this.getExtData(
-          "valueFormat",
-          "HH:mm:ss"
-        );
+      this.arrowControl = this.getExtData("arrowControl", false);
+      this.readonly = this.getExtData("readonly", false);
+      this.disabled = this.getExtData("disabled", false);
+      this.editable = this.getExtData("editable", true);
+      this.clearable = this.getExtData("clearable", true);
+      this.valueFormat = this.getExtData("valueFormat", "HH:mm:ss");
+
+      this.pickerOptions = {};
+      this.pickerOptions.format = this.getExtData("format", "HH:mm:ss");
+      const selectableRange = this.getExtData("selectableRange");
+      if (selectableRange) {
+        this.pickerOptions.selectableRange = selectableRange;
       }
-      this.pickerOptions = pickerOptions;
     }
   },
 };
