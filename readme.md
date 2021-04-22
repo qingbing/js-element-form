@@ -16,6 +16,8 @@
   - 完善 datetime-picker 组件
 - 1.0.10
   - 将 datetime-picker 改成 date-picker
+- 1.0.11
+  - 将 date-picker 中如果默认值小于 "1100-01-01",将视为""
 
 ## 1. 安装
 ```

@@ -64,7 +64,7 @@
 <script>
 // 导入
 import Base from "./base";
-import { isUndefined } from "@qingbing/helper";
+import { isUndefined, isString } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,
@@ -77,6 +77,12 @@ export default {
     if (!this.isText) {
       // 日期类型
       this.type = this.getExtData("type", "date");
+      if (
+        isString(this.formData[this.field]) &&
+        this.formData[this.field] < "1100-01-01"
+      ) {
+        this.formData[this.field] = "";
+      }
 
       this.readonly = this.getExtData("readonly", false);
       this.disabled = this.getExtData("disabled", false);

@@ -36,7 +36,7 @@ import ComponentSelect from "./components/select";
 import ComponentCascader from "./components/cascader";
 import ComponentSlider from "./components/slider";
 import ComponentTimePicker from "./components/time-picker";
-import ComponentDatetimePicker from "./components/datetime-picker";
+import ComponentDatePicker from "./components/date-picker";
 import ComponentRate from "./components/rate";
 import ComponentColorPicker from "./components/color";
 import ComponentUploader from "./components/uploader";
@@ -152,7 +152,7 @@ export default {
     "ele-color": ComponentColorPicker,
     "ele-uploader": ComponentUploader,
     "time-picker": ComponentTimePicker,
-    "date-picker": ComponentDatetimePicker,
+    "date-picker": ComponentDatePicker,
     "auto-complete": ComponentAutocomplete,
     "json-editor": ComponentJsonEditor,
     "vue-editor": ComponentVueEditor,
