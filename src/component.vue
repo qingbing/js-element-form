@@ -152,7 +152,7 @@ export default {
     "ele-color": ComponentColorPicker,
     "ele-uploader": ComponentUploader,
     "time-picker": ComponentTimePicker,
-    "datetime-picker": ComponentDatetimePicker,
+    "date-picker": ComponentDatetimePicker,
     "auto-complete": ComponentAutocomplete,
     "json-editor": ComponentJsonEditor,
     "vue-editor": ComponentVueEditor,

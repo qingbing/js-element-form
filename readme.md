@@ -14,6 +14,8 @@
   - 添加 qq 规则验证
   - 完善 time-picker 组件
   - 完善 datetime-picker 组件
+- 1.0.10
+  - 将 datetime-picker 改成 date-picker
 
 ## 1. 安装
 ```
