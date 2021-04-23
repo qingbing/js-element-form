@@ -35,7 +35,13 @@
   </el-form-item>
 
   <!-- 表单组件～远端选项 -->
-  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
+  <el-form-item
+    v-else
+    :label="item.label"
+    :prop="field"
+    :key="uniqid"
+    class="text-left"
+  >
     <el-select
       v-model="formData[field]"
       :placeholder="placeholder"
@@ -76,8 +82,8 @@ export default {
     };
   },
   created() {
+    this.formData[this.field] = "" + this.formData[this.field];
     if (this.isText) {
-      const vals = [];
       let selected = this.formData[this.field];
       if (!isArray(selected)) {
         if (isUndefined(selected)) {

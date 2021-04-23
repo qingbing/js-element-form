@@ -34,6 +34,7 @@ export default {
     };
   },
   created() {
+    this.formData[this.field] = "" + this.formData[this.field];
     if (this.isText) {
       this.viewText = col_value(
         this.formData[this.field],
