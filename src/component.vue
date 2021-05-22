@@ -105,7 +105,10 @@ export default {
   created() {
     // 将数组形式的字段信息转换成field对象
     const newItems = {};
-    each(this.items, (item) => {
+    each(this.items, (item, idx) => {
+      if (isUndefined(item.field)) {
+        item.field = idx;
+      }
       newItems[item.field] = item;
     });
     this.newItems = newItems;
