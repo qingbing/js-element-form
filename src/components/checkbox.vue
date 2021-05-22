@@ -41,13 +41,6 @@ export default {
     };
   },
   created() {
-    if (!isArray(this.formData[this.field])) {
-      this.formData[this.field] = [];
-    } else {
-      each(this.formData[this.field], (val, idx) => {
-        this.formData[this.field][idx] = "" + val;
-      });
-    }
     if (this.isText) {
       const ts = [];
       each(this.formData[this.field], (select) => {
@@ -58,6 +51,21 @@ export default {
       this.min = this.getExtData("min");
       this.max = this.getExtData("max");
     }
+  },
+  watch: {
+    formData: {
+      handler(newValue, oldValue) {
+        if (!isArray(this.formData[this.field])) {
+          this.formData[this.field] = [];
+        } else {
+          each(this.formData[this.field], (val, idx) => {
+            this.formData[this.field][idx] = "" + val;
+          });
+        }
+      },
+      immediate: true,
+      // deep:true,
+    },
   },
 };
 </script>

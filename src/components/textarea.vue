@@ -30,7 +30,6 @@
 <script>
 // 导入
 import ComponentInput from "./input";
-import { isUndefined, sprintf } from "@qingbing/helper";
 // 导出
 export default {
   extends: ComponentInput,

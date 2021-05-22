@@ -25,7 +25,6 @@
 <script>
 // 导入
 import Base from "./base";
-import { isUndefined, sprintf } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,

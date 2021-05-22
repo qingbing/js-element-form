@@ -34,7 +34,6 @@ export default {
     };
   },
   created() {
-    this.formData[this.field] = "" + this.formData[this.field];
     if (this.isText) {
       this.viewText = col_value(
         this.formData[this.field],
@@ -42,6 +41,15 @@ export default {
         ""
       );
     }
+  },
+  watch: {
+    formData: {
+      handler(newValue, oldValue) {
+        this.formData[this.field] = "" + this.formData[this.field];
+      },
+      immediate: true,
+      // deep:true,
+    },
   },
 };
 </script>

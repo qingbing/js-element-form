@@ -22,6 +22,8 @@
   - 修改 options 的初始渲染问题
 - 1.0.13
   - 检查 item 中是否有 field 字段，无则用 idx(索引) 代替 
+- 1.0.14
+  - 使用 watch 监控（checkbox、radio、select、date-picker） fromData，当数据整个发生变化时，将重新对数据进行必要的类型纠正
 
 ## 1. 安装
 ```

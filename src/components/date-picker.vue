@@ -77,13 +77,6 @@ export default {
     if (!this.isText) {
       // 日期类型
       this.type = this.getExtData("type", "date");
-      if (
-        isString(this.formData[this.field]) &&
-        this.formData[this.field] < "1100-01-01"
-      ) {
-        this.formData[this.field] = "";
-      }
-
       this.readonly = this.getExtData("readonly", false);
       this.disabled = this.getExtData("disabled", false);
       this.editable = this.getExtData("editable", true);
@@ -198,6 +191,20 @@ export default {
     },
     isPast(time) {
       return time.getTime() < Date.now();
+    },
+  },
+  watch: {
+    formData: {
+      handler(newValue, oldValue) {
+        if (
+          isString(this.formData[this.field]) &&
+          this.formData[this.field] < "1100-01-01"
+        ) {
+          this.formData[this.field] = "";
+        }
+      },
+      immediate: true,
+      // deep:true,
     },
   },
 };

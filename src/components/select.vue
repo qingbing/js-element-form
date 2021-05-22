@@ -166,5 +166,14 @@ export default {
       this.loading = false;
     },
   },
+  watch: {
+    formData: {
+      handler(newValue, oldValue) {
+        this.formData[this.field] = "" + this.formData[this.field];
+      },
+      immediate: true,
+      // deep:true,
+    },
+  },
 };
 </script>
