@@ -101,6 +101,9 @@ export default {
     if (this.isText) {
       return;
     }
+    if (isUndefined(this.item.exts)) {
+      this.item.exts = {};
+    }
     if (!isArray(this.item.rules)) {
       return;
     }
