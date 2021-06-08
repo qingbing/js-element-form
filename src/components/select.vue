@@ -23,6 +23,8 @@
       :clearable="clearable"
       :multiple="multiple"
       :filterable="filterable"
+      @change="handleChange"
+      @blur="handleBlur"
     >
       <el-option
         v-for="(val, key) in item.exts.options"
@@ -51,6 +53,8 @@
       filterable
       :loading="loading"
       :remote-method="remoteMethod"
+      @change="handleChange"
+      @blur="handleBlur"
     >
       <el-option
         v-for="(val, key) in item.exts.options"

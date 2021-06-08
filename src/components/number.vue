@@ -18,6 +18,8 @@
       :step="step"
       :stepStrictly="stepStrictly"
       :precision="precision"
+      @change="handleChange"
+      @blur="handleBlur"
     ></el-input-number>
   </el-form-item>
 </template>

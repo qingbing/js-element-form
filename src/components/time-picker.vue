@@ -32,6 +32,8 @@
       :star-placeholder="startPlaceholder"
       :end-placeholder="endPlaceholder"
       :range-separator="rangeSeparator"
+      @change="handleChange"
+      @blur="handleBlur"
     >
     </el-time-picker>
     <el-time-picker
@@ -45,6 +47,8 @@
       :clearable="clearable"
       :value-format="valueFormat"
       :pickerOptions="pickerOptions"
+      @change="handleChange"
+      @blur="handleBlur"
     >
     </el-time-picker>
   </el-form-item>

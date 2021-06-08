@@ -10,7 +10,13 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
+  <el-form-item
+    v-else
+    :label="item.label"
+    :prop="field"
+    :key="uniqid"
+    class="text-left"
+  >
     <el-cascader
       v-model="formData[field]"
       :options="options"
@@ -18,6 +24,8 @@
       :showAllLevels="showAllLevels"
       :props="props"
       :filterable="filterable"
+      @change="handleChange"
+      @blue="handleBlur"
     ></el-cascader>
   </el-form-item>
 </template>

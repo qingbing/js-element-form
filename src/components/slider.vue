@@ -20,6 +20,8 @@
       :max="max"
       :range="range"
       :marks="marks"
+      @change="handleChange"
+      @input="handleChange"
     ></el-slider>
   </el-form-item>
 </template>

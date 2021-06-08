@@ -11,6 +11,7 @@
       :disabled="type == 'view'"
       :activeValue="activeValue"
       :inactiveValue="inActiveValue"
+      @change="handleChange"
     >
     </el-switch>
   </el-form-item>
@@ -19,7 +20,7 @@
 <script>
 // 导入
 import Base from "./base";
-import { isArray, isObject, isUndefined } from "@qingbing/helper";
+import { isObject } from "@qingbing/helper";
 // 导出
 export default {
   extends: Base,

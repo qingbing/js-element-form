@@ -26,6 +26,8 @@
       :maxlength="maxlength"
       :minlength="minlength"
       :showWordLimit="showWordLimit"
+      @change="handleChange"
+      @blur="handleBlur"
     ></el-input>
   </el-form-item>
   <!-- 数字填写 -->
@@ -41,6 +43,8 @@
       :maxlength="maxlength"
       :minlength="minlength"
       :showWordLimit="showWordLimit"
+      @change="handleChange"
+      @blur="handleBlur"
     ></el-input>
   </el-form-item>
 </template>

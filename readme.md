@@ -26,6 +26,8 @@
   - 使用 watch 监控（checkbox、radio、select、date-picker） fromData，当数据整个发生变化时，将重新对数据进行必要的类型纠正
 - 1.0.15
   - 修改 switch 在数据复制时的显示bug
+- 1.0.16
+  - 为所有的组件适当的添加 change、blur 事件
 
 ## 1. 安装
 ```

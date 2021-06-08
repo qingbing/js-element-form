@@ -121,6 +121,18 @@ export default {
     };
   },
   methods: {
+    // 值改变事件
+    handleChange() {
+      if (isFunction(this.item.exts.changeCallback)) {
+        this.item.exts.changeCallback();
+      }
+    },
+    // 失去焦点事件
+    handleBlur() {
+      if (isFunction(this.item.exts.blurCallback)) {
+        this.item.exts.blurCallback();
+      }
+    },
     /**
      * 获取扩展数据中的字段信息
      */

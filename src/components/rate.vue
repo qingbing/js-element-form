@@ -10,7 +10,13 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
+  <el-form-item
+    v-else
+    :label="item.label"
+    :prop="field"
+    :key="uniqid"
+    class="text-left"
+  >
     <el-rate
       v-model="formData[field]"
       :max="max"
@@ -20,6 +26,7 @@
       :colors="colors"
       :showText="showText"
       :texts="texts"
+      @change="handleChange"
     ></el-rate>
   </el-form-item>
 </template>

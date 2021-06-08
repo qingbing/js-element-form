@@ -17,7 +17,12 @@
     :key="uniqid"
     class="text-left"
   >
-    <el-checkbox-group v-model="formData[field]" :min="min" :max="max">
+    <el-checkbox-group
+      v-model="formData[field]"
+      :min="min"
+      :max="max"
+      @change="handleChange"
+    >
       <template v-for="(val, key) in item.exts.options">
         <el-checkbox :label="key" :key="uniqid + key" border>{{
           val

@@ -23,6 +23,8 @@
       :maxlength="maxlength"
       :minlength="minlength"
       :showWordLimit="showWordLimit"
+      @change="handleChange"
+      @blur="handleBlur"
     ></el-input>
   </el-form-item>
 </template>

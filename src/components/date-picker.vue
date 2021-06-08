@@ -37,6 +37,8 @@
       :range-separator="rangeSeparator"
       :start-placeholder="startPlaceholder"
       :end-placeholder="endPlaceholder"
+      @change="handleChange"
+      @blur="handleBlur"
     >
     </el-date-picker>
     <el-date-picker
@@ -56,6 +58,8 @@
       :picker-options="pickerOptions"
       :value-format="valueFormat"
       :format="format"
+      @change="handleChange"
+      @blur="handleBlur"
     >
     </el-date-picker>
   </el-form-item>

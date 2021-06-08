@@ -10,8 +10,14 @@
   </el-form-item>
 
   <!-- 表单组件 -->
-  <el-form-item v-else :label="item.label" :prop="field" :key="uniqid" class="text-left">
-    <el-radio-group v-model="formData[field]">
+  <el-form-item
+    v-else
+    :label="item.label"
+    :prop="field"
+    :key="uniqid"
+    class="text-left"
+  >
+    <el-radio-group v-model="formData[field]" @change="handleChange">
       <template v-for="(val, key) in item.exts.options">
         <el-radio :label="key" :key="uniqid + key" border>
           {{ val }}
