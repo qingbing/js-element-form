@@ -46,13 +46,7 @@ export default {
     };
   },
   created() {
-    if (this.isText) {
-      const ts = [];
-      each(this.formData[this.field], (select) => {
-        ts.push(this.item.exts.options[select]);
-      });
-      this.viewText = ts.join(",");
-    } else {
+    if (!this.isText) {
       this.min = this.getExtData("min");
       this.max = this.getExtData("max");
     }
@@ -70,6 +64,16 @@ export default {
       },
       immediate: true,
       // deep:true,
+    },
+  },
+  computed: {
+    viewText() {
+      // 计算选择过的标签的值
+      let text = [];
+      each(this.formData[this.field], (select) => {
+        text.push(this.item.exts.options[select]);
+      });
+      return text.join("/");
     },
   },
 };

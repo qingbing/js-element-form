@@ -87,22 +87,7 @@ export default {
   },
   created() {
     this.formData[this.field] = "" + this.formData[this.field];
-    if (this.isText) {
-      let selected = this.formData[this.field];
-      if (!isArray(selected)) {
-        if (isUndefined(selected)) {
-          selected = [];
-        } else {
-          selected = [selected];
-        }
-      }
-      const options = this.item.exts.options;
-      const ts = [];
-      each(selected, (select) => {
-        ts.push(options[select]);
-      });
-      this.viewText = ts.join(",");
-    } else {
+    if (!this.isText) {
       const placeholder = this.getExtData("placeholder");
       if (isUndefined(placeholder)) {
         this.placeholder = sprintf("请选择 %s", this.item.label);
@@ -177,6 +162,25 @@ export default {
       },
       immediate: true,
       // deep:true,
+    },
+  },
+  computed: {
+    viewText() {
+      // 计算选择过的标签的值
+      let selected = this.formData[this.field];
+      if (!isArray(selected)) {
+        if (isUndefined(selected)) {
+          selected = [];
+        } else {
+          selected = [selected];
+        }
+      }
+      const options = this.item.exts.options;
+      const text = [];
+      each(selected, (select) => {
+        text.push(options[select]);
+      });
+      return text.join(",");
     },
   },
 };

@@ -39,15 +39,7 @@ export default {
       trigger: "change",
     };
   },
-  created() {
-    if (this.isText) {
-      this.viewText = col_value(
-        this.formData[this.field],
-        this.item.exts.options,
-        ""
-      );
-    }
-  },
+  created() {},
   watch: {
     formData: {
       handler(newValue, oldValue) {
@@ -55,6 +47,11 @@ export default {
       },
       immediate: true,
       // deep:true,
+    },
+  },
+  computed: {
+    viewText() {
+      return col_value(this.formData[this.field], this.item.exts.options, "");
     },
   },
 };

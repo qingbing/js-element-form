@@ -53,8 +53,19 @@ export default {
       if (!isArray(options)) {
         throw new Error("级联选项必须为数组");
       }
+      // 显示的值需要计算
+    } else {
+      this.clearable = this.getExtData("clearable", false);
+      this.showAllLevels = this.getExtData("showAllLevels", true);
+      this.filterable = this.getExtData("filterable", true);
+      this.props = {};
+      this.props.checkStrictly = this.getExtData("checkStrictly", false);
+    }
+  },
+  computed: {
+    viewText() {
       // 计算选择过的标签的值
-      let viewText = [];
+      let text = [];
       while (selected.length > 0) {
         if (options.length <= 0) {
           break;
@@ -66,7 +77,7 @@ export default {
             return;
           }
           inOption = true;
-          viewText.push(option.label);
+          text.push(option.label);
           options = isUndefined(option.children) ? [] : option.children;
           return false;
         });
@@ -74,17 +85,8 @@ export default {
           break;
         }
       }
-      this.viewText = viewText.join("/");
-    } else {
-      this.clearable = this.getExtData("clearable", false);
-      this.showAllLevels = this.getExtData("showAllLevels", true);
-      this.filterable = this.getExtData("filterable", true);
-      this.props = {};
-      this.props.checkStrictly = this.getExtData("checkStrictly", false);
-    }
+      return text.join("/");
+    },
   },
 };
 </script>
-
-<style scoped>
-</style>
