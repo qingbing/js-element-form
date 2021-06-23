@@ -32,6 +32,8 @@
   - 解决未定义 exts 时的报错
 - 1.0.18
   - 解决 viewText 的在显示时的计算问题，通过计算属性来实现
+- 1.0.19
+  - 修改 base.vue 文件中事件函数（ changeCallback， blurCallback ） 的参数传递
 
 ## 1. 安装
 ```

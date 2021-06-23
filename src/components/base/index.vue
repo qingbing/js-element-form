@@ -34,11 +34,6 @@ import {
   each,
 } from "@qingbing/helper";
 import DefMsgs from "./../../message";
-import moment from "moment";
-
-function strtotime(str) {
-  return parseFloat(moment(str).format("x"));
-}
 
 // 导出
 export default {
@@ -127,13 +122,21 @@ export default {
     // 值改变事件
     handleChange() {
       if (isFunction(this.item.exts.changeCallback)) {
-        this.item.exts.changeCallback();
+        this.item.exts.changeCallback(
+          this.field,
+          this.formData[this.field],
+          this.formData
+        );
       }
     },
     // 失去焦点事件
     handleBlur() {
       if (isFunction(this.item.exts.blurCallback)) {
-        this.item.exts.blurCallback();
+        this.item.exts.blurCallback(
+          this.field,
+          this.formData[this.field],
+          this.formData
+        );
       }
     },
     /**
@@ -310,7 +313,8 @@ export default {
     },
     ipv4Rule(rule) {
       rule.message = this.getRuleMessage(rule, DefMsgs.ipv4);
-      rule.pattern = /^((25[0-5])|(2[0-4]\d)|(1?\d{1,2})\.){3}((25[0-5])|(2[0-4]\d)|(1?\d{1,2}))$/;
+      rule.pattern =
+        /^((25[0-5])|(2[0-4]\d)|(1?\d{1,2})\.){3}((25[0-5])|(2[0-4]\d)|(1?\d{1,2}))$/;
       this.patternRule(rule);
     },
     dateRule(rule) {
