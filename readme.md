@@ -34,6 +34,8 @@
   - 解决 viewText 的在显示时的计算问题，通过计算属性来实现
 - 1.0.19
   - 修改 base.vue 文件中事件函数（ changeCallback， blurCallback ） 的参数传递
+- 1.0.20
+  - 修改 date-picker 和 time-picker 的 editable 的默认值为 false
 
 ## 1. 安装
 ```

@@ -83,7 +83,7 @@ export default {
       this.type = this.getExtData("type", "date");
       this.readonly = this.getExtData("readonly", false);
       this.disabled = this.getExtData("disabled", false);
-      this.editable = this.getExtData("editable", true);
+      this.editable = this.getExtData("editable", false);
       this.clearable = this.getExtData("clearable", true);
       this.align = this.getExtData("align", "left");
       this.prefixIcon = this.getExtData("prefixIcon", "el-icon-date");
