@@ -36,6 +36,8 @@
   - 修改 base.vue 文件中事件函数（ changeCallback， blurCallback ） 的参数传递
 - 1.0.20
   - 修改 date-picker 和 time-picker 的 editable 的默认值为 false
+- 1.0.21
+  - 修改 upload
 
 ## 1. 安装
 ```
