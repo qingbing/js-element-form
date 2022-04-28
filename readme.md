@@ -38,6 +38,8 @@
   - 修改 date-picker 和 time-picker 的 editable 的默认值为 false
 - 1.0.21
   - 修改 upload
+- 1.0.22
+  - switch组件的值支持数字和字符串数字
 
 ## 1. 安装
 ```

@@ -30,9 +30,12 @@ export default {
     if (isObject(options)) {
       this.activeValue = options.activeValue;
       this.inActiveValue = options.inActiveValue;
-    } else {
+    } else if (typeof this.formData[this.field] === "number") {
       this.activeValue = 1;
       this.inActiveValue = 0;
+    } else {
+      this.activeValue = "1";
+      this.inActiveValue = "0";
     }
     // 计算 type、 viewText
     if (!this.isText) {
