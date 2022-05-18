@@ -40,6 +40,12 @@
   - 修改 upload
 - 1.0.22
   - switch组件的值支持数字和字符串数字
+- 1.0.23(调试版本)
+  - vue2-editor 替换成 @qingbing/vue2-editor
+    - 新组件增加源码查看和编辑功能
+    - 新组件对图片的编辑更为灵活
+- 1.0.24
+  - 修正了对 @qingbing/vue2-editor 的使用
 
 ## 1. 安装
 ```
@@ -122,4 +128,22 @@ custom 定义常用
 - @json-change: json编辑器内容改变时触发
 - @json-save: 点击保存时触发
 - @has-error: 发生错误时触发
+
+
+## 6. 关于 @qingbing/vue2-editor
+### 5.1 exts 参数
+- toolbarMode : 工具栏模式
+  - 默认 simple
+- editorToolbar : 自定义工具栏
+  - 默认 []
+- editorOptions : 编辑器配置
+  - 默认 {}
+- useSource : 开启源码工具按钮
+  - 默认 false
+- useImageUrl : 图片使用url输入模式
+  - 默认 true
+- useImageHandle : 开启图片上传
+  - 默认 false
+- imgAdded : 图片上传方法（function）
+  - 无默认
 

@@ -1,6 +1,6 @@
 {
   "name": "@qingbing/element-form",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "封装 vue-element-ui 的表单组件",
   "home": "https://github.com/qingbing/js-element-form",
   "author": "https://github.com/qingbing",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@qingbing/helper": "^1.0.3",
-    "@qingbing/vue2-editor": "^1.0.1",
+    "@qingbing/vue2-editor": "^1.0.2",
     "element-ui": "^2.14.1",
     "highlight.js": "^10.6.0",
     "moment": "^2.29.1",
