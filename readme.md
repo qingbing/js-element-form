@@ -46,6 +46,8 @@
     - 新组件对图片的编辑更为灵活
 - 1.0.24
   - 修正了对 @qingbing/vue2-editor 的使用
+- 1.0.25
+  - 配合修改inArray 为 isElement
 
 ## 1. 安装
 ```

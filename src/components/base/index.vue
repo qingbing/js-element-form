@@ -28,7 +28,6 @@ import {
   isFunction,
   isObject,
   isEmpty,
-  inArray,
   replace,
   copy,
   each,
@@ -87,7 +86,7 @@ export default {
       this.isText = true;
     } else if (this.item.input_type === "text") {
       this.isText = true;
-    } else if (inArray(this.field, this.textFields)) {
+    } else if (this.textFields.isElement(this.field)) {
       this.isText = true;
     } else {
       this.isText = false;

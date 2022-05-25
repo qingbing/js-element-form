@@ -22,7 +22,7 @@
 
 <script>
 // 导入函数
-import { uniqid, inArray, isDev, isUndefined, each } from "@qingbing/helper";
+import { uniqid, isDev, isUndefined, each } from "@qingbing/helper";
 // 导入组件
 import ComponentText from "./components/text";
 import ComponentInput from "./components/input";
@@ -162,7 +162,7 @@ export default {
   },
   methods: {
     inSubComponent(componentId) {
-      if (inArray(componentId, this.componentIds)) {
+      if (this.componentIds.isElement(componentId)) {
         return true;
       }
       if (isDev()) {
